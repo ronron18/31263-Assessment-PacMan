@@ -268,7 +268,6 @@ MonoBehaviour:
   scaredBGM: {fileID: 8300000, guid: 352b1f407bc86eb4797b71ebea261e1c, type: 3}
   oneEatenBGM: {fileID: 8300000, guid: 51b188add4684cc4aae147432eb71495, type: 3}
   audioSource: {fileID: 17068212}
-  isScared: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
