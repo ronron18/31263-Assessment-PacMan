@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WalkLeftRight
+  m_Name: WalkDown_blue
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,13 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 1360589817389770239, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+      value: {fileID: 295831949110345186, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
     - time: 0.1
-      value: {fileID: -7599389026872077115, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+      value: {fileID: -4587420770612847953, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
     - time: 0.2
-      value: {fileID: 1422994646197861801, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+      value: {fileID: 3586277038483646951, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
     - time: 0.3
-      value: {fileID: -6988866968831321075, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+      value: {fileID: 8888317154032824975, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,10 +46,10 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 1360589817389770239, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
-    - {fileID: -7599389026872077115, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
-    - {fileID: 1422994646197861801, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
-    - {fileID: -6988866968831321075, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+    - {fileID: 295831949110345186, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+    - {fileID: -4587420770612847953, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+    - {fileID: 3586277038483646951, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
+    - {fileID: 8888317154032824975, guid: 866cc06a09067d3498c0fffdfa662ba4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
