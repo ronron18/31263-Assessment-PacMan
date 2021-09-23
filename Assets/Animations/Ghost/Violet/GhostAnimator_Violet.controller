@@ -65,7 +65,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isScared
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: isDead
@@ -518,7 +518,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isDead
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: direction
@@ -617,7 +617,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: IsRecovering
+  - m_Name: isRecovering
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -707,7 +707,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isScared
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: isDead
@@ -769,7 +769,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isDead
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: direction
@@ -884,7 +884,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isDead
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -722939849758955161}
@@ -943,7 +943,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isDead
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8556121852801441973}
@@ -996,7 +996,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isScared
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: isDead
@@ -1111,7 +1111,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isDead
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: direction
@@ -1148,7 +1148,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isDead
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsRecovering
+    m_ConditionEvent: isRecovering
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7362410385719265269}
