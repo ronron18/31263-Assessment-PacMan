@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 27990835}
   m_Layer: 5
   m_Name: MenuBox
-  m_TagString: Untagged
+  m_TagString: MenuBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 713044480}
   m_Layer: 5
   m_Name: Subtitle
-  m_TagString: Untagged
+  m_TagString: SubtitleText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -533,7 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+  m_Color: {r: 0.7529412, g: 0.3787294, b: 0.3787294, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 1095793679}
   m_Layer: 5
   m_Name: Title
-  m_TagString: Untagged
+  m_TagString: TitleText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.503, b: 0.503, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1122,6 +1122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1649219690}
   - component: {fileID: 1649219691}
+  - component: {fileID: 1649219692}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1153,6 +1154,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0f4111d5ff03f94682a52575d7a7af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1649219692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649219689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225147627b88b9d4a84309a35e31de49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1673351953
