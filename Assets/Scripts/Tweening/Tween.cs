@@ -9,6 +9,7 @@ public class Tween
     public Vector3 EndPos {get;}
     public float StartTime {get;}
     public float Duration {get;}
+    public Easings.Easing Ease {get;}
 
     public Tween(Transform target, Vector3 startPos, Vector3 endPos, float startTime, float duration)
     {
@@ -17,5 +18,17 @@ public class Tween
         EndPos = endPos;
         StartTime = startTime;
         Duration = duration;
+        Ease = Easings.Easing.s;
+    }
+
+    // NEW!!! NOW WITH EASINGS!!!!!
+    public Tween(Transform target, Vector3 startPos, Vector3 endPos, float startTime, float duration, Easings.Easing ease)
+    {
+        Target = target;
+        StartPos = startPos;
+        EndPos = endPos;
+        StartTime = startTime;
+        Duration = duration;
+        Ease = ease;
     }
 }
