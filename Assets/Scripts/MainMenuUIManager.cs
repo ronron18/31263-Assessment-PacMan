@@ -8,11 +8,13 @@ using UnityEngine.UI;
     including pac-student and stuff.
 */
 
-public class MainMenuAnimManager : MonoBehaviour
+public class MainMenuUIManager : MonoBehaviour
 {
-    private Text titleText;
-    private Text subtitleText;
-    private RectTransform menuBox;
+    [SerializeField] private Text titleText;
+    [SerializeField] private Text subtitleText;
+    [SerializeField] private RectTransform menuBox;
+    [SerializeField] private RectTransform scoreboard;
+    [SerializeField] private RectTransform showMenuButton;
     private Tweener tweener;
 
     private float currentTitleHue = 0.0f;
@@ -22,9 +24,6 @@ public class MainMenuAnimManager : MonoBehaviour
     void Start()
     {
         tweener = GetComponent<Tweener>();
-        menuBox = GameObject.FindWithTag("MenuBox").GetComponent<RectTransform>();
-        titleText = GameObject.FindWithTag("TitleText").GetComponent<Text>();
-        subtitleText = GameObject.FindWithTag("SubtitleText").GetComponent<Text>();
         InitializeMenu();
     }
 
@@ -46,20 +45,27 @@ public class MainMenuAnimManager : MonoBehaviour
         currentTitleHue += 0.2f * Time.deltaTime;
     }
 
-    private void HideMenu() {
+    public void HideMenu() {
         Vector2 startPosition = new Vector2(0.0f, 0.0f);
         Vector2 endPosition = new Vector2(-menuRatio * Screen.width, 0.0f);
         tweener.AddTween(menuBox, startPosition, endPosition, 1.0f, Easings.Easing.so);
+        tweener.AddTween(showMenuButton, endPosition, startPosition, 1.0f, Easings.Easing.so);
     }
 
-    private void ShowMenu() {
+    public void ShowMenu() {
         Vector2 startPosition = new Vector2(-menuRatio * Screen.width, 0.0f);
         Vector2 endPosition = new Vector2(0.0f, 0.0f);
         tweener.AddTween(menuBox, startPosition, endPosition, 1.0f, Easings.Easing.so);
+        tweener.AddTween(showMenuButton, endPosition, startPosition, 1.0f, Easings.Easing.so);
+    }
+
+    public void ExitGame() {
+        Application.Quit();
     }
 
     private void InitializeMenu() {
         menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
+        showMenuButton.anchoredPosition = new Vector2(-menuRatio * Screen.width, showMenuButton.anchoredPosition.y);
         ShowMenu();
     }
 }
