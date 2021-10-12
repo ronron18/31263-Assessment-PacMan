@@ -24,8 +24,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        player.GetComponent<Animator>().SetInteger("direction", direction);
-        tweener.AddTween(player.transform, player.transform.position, positions[direction], 1.5f);
+        if(tweener.AddTween(player.transform, player.transform.position, positions[direction], 1.5f))
+        {
+            player.GetComponent<Animator>().SetInteger("direction", direction);
+            ChangeDirection();
+        }
     }
 
     public void ChangeDirection()
