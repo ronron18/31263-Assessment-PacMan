@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tweener : MonoBehaviour {
     private List<Tween> activeTweens;
 
-    void Start() {
+    void Awake() {
         activeTweens = new List<Tween>();
     }
 
