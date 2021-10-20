@@ -15,10 +15,10 @@ public class MainMenuPlayerAnimator : MonoBehaviour
     void Start()
     {
         positions = new Vector3[4];
-        positions[0] = new Vector3(7.0f, 3.0f, 0.0f);
-        positions[1] = new Vector3(7.0f, -3.0f, 0.0f); 
-        positions[2] = new Vector3(-7.0f, -3.0f, 0.0f);
-        positions[3] = new Vector3(-7.0f, 3.0f, 0.0f);
+        positions[0] = new Vector3(5.0f, 3.0f, 0.0f);
+        positions[1] = new Vector3(5.0f, -3.0f, 0.0f); 
+        positions[2] = new Vector3(-5.0f, -3.0f, 0.0f);
+        positions[3] = new Vector3(-5.0f, 3.0f, 0.0f);
     }
 
     // Update is called once per frame
