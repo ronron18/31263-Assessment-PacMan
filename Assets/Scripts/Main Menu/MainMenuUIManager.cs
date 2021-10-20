@@ -14,7 +14,6 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private Text subtitleText;
     [SerializeField] private RectTransform menuBox;
     [SerializeField] private RectTransform scoreboard;
-    [SerializeField] private RectTransform showMenuButton;
     private Tweener tweener;
 
     private float currentTitleHue = 0.0f;
@@ -49,14 +48,12 @@ public class MainMenuUIManager : MonoBehaviour
         Vector2 startPosition = new Vector2(0.0f, 0.0f);
         Vector2 endPosition = new Vector2(-menuRatio * Screen.width, 0.0f);
         tweener.AddTween(menuBox, startPosition, endPosition, 1.0f, Easings.Easing.so);
-        tweener.AddTween(showMenuButton, endPosition, startPosition, 1.0f, Easings.Easing.so);
     }
 
     public void ShowMenu() {
         Vector2 startPosition = new Vector2(-menuRatio * Screen.width, 0.0f);
         Vector2 endPosition = new Vector2(0.0f, 0.0f);
         tweener.AddTween(menuBox, startPosition, endPosition, 1.0f, Easings.Easing.so);
-        tweener.AddTween(showMenuButton, endPosition, startPosition, 1.0f, Easings.Easing.so);
     }
 
     public void ExitGame() {
@@ -65,7 +62,6 @@ public class MainMenuUIManager : MonoBehaviour
 
     private void InitializeMenu() {
         menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
-        showMenuButton.anchoredPosition = new Vector2(-menuRatio * Screen.width, showMenuButton.anchoredPosition.y);
         ShowMenu();
     }
 }
