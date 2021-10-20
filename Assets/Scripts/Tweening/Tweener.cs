@@ -14,15 +14,19 @@ public class Tweener : MonoBehaviour {
         for (int i = activeTweens.Count-1; i >=0; i--) 
         {
             activeTween = activeTweens[i];
-
-            if (Vector3.Distance(activeTween.Target.position, activeTween.EndPos) > 0.1f) {
-                float timeFraction = (Time.time - activeTween.StartTime) / activeTween.Duration;
-                timeFraction = Easings.CalculateTimeFraction(timeFraction, activeTween.Ease);
-                activeTween.Target.position = Vector3.Lerp(activeTween.StartPos,
-                                                          activeTween.EndPos,
-                                                           timeFraction);                
-            } else {
-                activeTween.Target.position = activeTween.EndPos;
+            if(activeTween.Target != null) {
+                if (Vector3.Distance(activeTween.Target.position, activeTween.EndPos) > 0.1f) {
+                    float timeFraction = (Time.time - activeTween.StartTime) / activeTween.Duration;
+                    timeFraction = Easings.CalculateTimeFraction(timeFraction, activeTween.Ease);
+                    activeTween.Target.position = Vector3.Lerp(activeTween.StartPos,
+                                                              activeTween.EndPos,
+                                                               timeFraction);                
+                } else {
+                    activeTween.Target.position = activeTween.EndPos;
+                    activeTweens.RemoveAt(i);
+                }
+            }
+            else {
                 activeTweens.RemoveAt(i);
             }
         }
