@@ -17,10 +17,10 @@ public class MainMenuUIManager : MonoBehaviour
         LevelTwo = 2
     };
 
-    [SerializeField] private Text titleText;
-    [SerializeField] private Text subtitleText;
-    [SerializeField] private RectTransform menuBox;
-    [SerializeField] private RectTransform loadingPanel;
+    private Text titleText;
+    private Text subtitleText;
+    private RectTransform menuBox;
+    private RectTransform loadingPanel;
     private Tweener tweener;
 
     private float currentTitleHue = 0.0f;
@@ -31,7 +31,7 @@ public class MainMenuUIManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         tweener = GetComponent<Tweener>();
-        InitializeMenu();
+        InitializeMainMenu();
     }
 
     // Update is called once per frame
@@ -53,43 +53,52 @@ public class MainMenuUIManager : MonoBehaviour
         currentTitleHue += 0.2f * Time.deltaTime;
     }
 
-    public void HideMenu() {
-        /*
-        Vector2 startPosition = new Vector2(0.0f, 0.0f);
-        Vector2 endPosition = new Vector2(-menuRatio * Screen.width, 0.0f);
-        tweener.AddTween(menuBox, startPosition, endPosition, 1.0f, Easings.Easing.so);
-        */
-        StartCoroutine(LerpMenu(new Vector2(-menuRatio * Screen.width, 0.0f), 1.0f, Easings.Easing.so));
-    }
-
-    public void ShowMenu() {
-        /*
-        Vector2 startPosition = new Vector2(-menuRatio * Screen.width, 0.0f);
-        Vector2 endPosition = new Vector2(0.0f, 0.0f);
-        tweener.AddTween(menuBox, startPosition, endPosition, 1.0f, Easings.Easing.so);
-        */
-        StartCoroutine(LerpMenu(new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
+    /*
+        Menu UI Initialization and Game Termination.
+    */
+    private void InitializeMainMenu() {
+        menuBox = GameObject.FindWithTag("MenuBox").GetComponent<RectTransform>();
+        loadingPanel = GameObject.FindWithTag("LoadingPanel").GetComponent<RectTransform>();
+        titleText = GameObject.FindWithTag("TitleText").GetComponent<Text>();
+        subtitleText = GameObject.FindWithTag("SubtitleText").GetComponent<Text>();
+        menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
+        loadingPanel.sizeDelta = new Vector2(Screen.width, Screen.height);
+        HideLoadingScreenInstant();
+        ShowMenu();
     }
 
     public void ExitGame() {
+        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 
-    private void InitializeMenu() {
-        menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
-        loadingPanel.sizeDelta = new Vector2(Screen.width, Screen.height);
-        HideLoadingScreen();
-        ShowMenu();
+    /*
+        Code for showing/hiding UI elements
+    */
+    public void ShowMenu() {
+        StartCoroutine(LerpUIElement(menuBox, new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
+    }
+
+    public void HideMenu() {
+        StartCoroutine(LerpUIElement(menuBox, new Vector2(-menuRatio * Screen.width, 0.0f), 1.0f, Easings.Easing.so));
     }
 
     // Show/Hide Loading Screen
     public void ShowLoadingScreen() {
-        StartCoroutine(LerpLoadingScreen(new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
+        StartCoroutine(LerpUIElement(loadingPanel, new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
     }
 
     public void HideLoadingScreen() {
-        StartCoroutine(LerpLoadingScreen(new Vector2(Screen.width, 0.0f), 1.0f, Easings.Easing.so));
+        StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 1.0f, Easings.Easing.so));
     }
+
+    public void HideLoadingScreenInstant() {
+        StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 0.01f, Easings.Easing.s));
+    }
+
+    /*
+        Codes for loading levels
+    */
 
     // Load levels
     public void LoadFirstLevel() {
@@ -99,8 +108,24 @@ public class MainMenuUIManager : MonoBehaviour
     // what to do when a level loads
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         /* Load first level UI */
+        switch(scene.buildIndex) {
+            case (int)GameScenes.MainMenu:
+                Debug.Log("Main Menu Loaded");
+                break;
+            case (int)GameScenes.LevelOne:
+                Debug.Log("First Level Loaded");
+                break;
+            case (int)GameScenes.LevelTwo:
+                Debug.Log("Second Level Loaded");
+                break;
+        }
     }
 
+    /*
+        Coroutines
+    */
+
+    // Coroutine to load a level
     public IEnumerator LoadLevelCoroutine(int level) {
         HideMenu();
         ShowLoadingScreen();
@@ -113,38 +138,21 @@ public class MainMenuUIManager : MonoBehaviour
         HideLoadingScreen();
     }
 
-    // Temporary fix, will prolly be removed
-    private IEnumerator LerpLoadingScreen(Vector2 targetPos, float duration, Easings.Easing ease)
+    // Coroutine to lerp a UI element because i won't bother making another tweener/tween class for RectTransforms >:(
+    private IEnumerator LerpUIElement(RectTransform uiElement, Vector2 targetPos, float duration, Easings.Easing ease)
     {
-        Vector2 startingPos = loadingPanel.anchoredPosition;
+        Vector2 startingPos = uiElement.anchoredPosition;
         float currentTime = 0.0f;
         while (currentTime < duration)
         {
             float timeFraction = currentTime/duration;
             timeFraction = Easings.CalculateTimeFraction(timeFraction, ease);
-            loadingPanel.anchoredPosition = Vector2.Lerp(startingPos, targetPos, currentTime / duration);
+            uiElement.anchoredPosition = Vector2.Lerp(startingPos, targetPos, currentTime / duration);
             currentTime += Time.deltaTime;
             yield return null;
         }
 
         yield return null;
-        loadingPanel.anchoredPosition = targetPos;
-    }
-
-    private IEnumerator LerpMenu(Vector2 targetPos, float duration, Easings.Easing ease)
-    {
-        Vector2 startingPos = menuBox.anchoredPosition;
-        float currentTime = 0.0f;
-        while (currentTime < duration)
-        {
-            float timeFraction = currentTime/duration;
-            timeFraction = Easings.CalculateTimeFraction(timeFraction, ease);
-            menuBox.anchoredPosition = Vector2.Lerp(startingPos, targetPos, currentTime / duration);
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
-
-        yield return null;
-        menuBox.anchoredPosition = targetPos;
+        uiElement.anchoredPosition = targetPos;
     }
 }

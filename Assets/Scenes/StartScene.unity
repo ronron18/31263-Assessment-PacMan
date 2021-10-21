@@ -838,7 +838,7 @@ GameObject:
   - component: {fileID: 900933587}
   - component: {fileID: 900933589}
   - component: {fileID: 900933588}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,9 +917,9 @@ GameObject:
   - component: {fileID: 1023980269}
   - component: {fileID: 1023980271}
   - component: {fileID: 1023980270}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Panel
-  m_TagString: Untagged
+  m_TagString: LoadingPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1638,7 +1638,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1649219690}
-  - component: {fileID: 1649219691}
   - component: {fileID: 1649219692}
   - component: {fileID: 1649219693}
   m_Layer: 0
@@ -1663,18 +1662,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1649219691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649219689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0f4111d5ff03f94682a52575d7a7af5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1649219692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1687,10 +1674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225147627b88b9d4a84309a35e31de49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleText: {fileID: 1095793679}
-  subtitleText: {fileID: 713044480}
-  menuBox: {fileID: 27990834}
-  loadingPanel: {fileID: 1023980269}
 --- !u!114 &1649219693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1894,7 +1877,7 @@ GameObject:
   - component: {fileID: 1985064591}
   - component: {fileID: 1985064590}
   - component: {fileID: 1985064589}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LoadingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
