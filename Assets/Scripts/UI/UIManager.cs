@@ -9,7 +9,7 @@ using UnityEngine.UI;
     including pac-student and stuff.
 */
 
-public class MainMenuUIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     public enum GameScenes {
         MainMenu = 0,
@@ -17,21 +17,32 @@ public class MainMenuUIManager : MonoBehaviour
         LevelTwo = 2
     };
 
-    private Text titleText;
-    private Text subtitleText;
-    private RectTransform menuBox;
-    private RectTransform loadingPanel;
-    private Tweener tweener;
+    public static GameObject manager;
+
+    public Text titleText;
+    public Text subtitleText;
+    public RectTransform menuBox;
+    public RectTransform loadingPanel;
+    public Tweener tweener;
 
     private float currentTitleHue = 0.0f;
     private const float menuRatio = 800.0f/1920;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        if(manager == null) {
+            manager = gameObject;
+        } 
+        else {
+            Destroy(gameObject);
+        }
+
         tweener = GetComponent<Tweener>();
         InitializeMainMenu();
+        HideLoadingScreenInstant();
     }
 
     // Update is called once per frame
@@ -41,7 +52,6 @@ public class MainMenuUIManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W)) ShowMenu();
         if(Input.GetKeyDown(KeyCode.S)) HideMenu();
         */
-        Debug.Log(loadingPanel.anchoredPosition);
         if(titleText != null && subtitleText != null) CycleColors();  // Cycle through colors for title and subtitle
     }
 
@@ -63,7 +73,6 @@ public class MainMenuUIManager : MonoBehaviour
         subtitleText = GameObject.FindWithTag("SubtitleText").GetComponent<Text>();
         menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
         loadingPanel.sizeDelta = new Vector2(Screen.width, Screen.height);
-        HideLoadingScreenInstant();
         ShowMenu();
     }
 
@@ -76,24 +85,29 @@ public class MainMenuUIManager : MonoBehaviour
         Code for showing/hiding UI elements
     */
     public void ShowMenu() {
-        StartCoroutine(LerpUIElement(menuBox, new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
+        if(menuBox != null)
+            StartCoroutine(LerpUIElement(menuBox, new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
     }
 
     public void HideMenu() {
-        StartCoroutine(LerpUIElement(menuBox, new Vector2(-menuRatio * Screen.width, 0.0f), 1.0f, Easings.Easing.so));
+        if(menuBox != null)
+            StartCoroutine(LerpUIElement(menuBox, new Vector2(-menuRatio * Screen.width, 0.0f), 1.0f, Easings.Easing.so));
     }
 
     // Show/Hide Loading Screen
     public void ShowLoadingScreen() {
-        StartCoroutine(LerpUIElement(loadingPanel, new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
+        if(loadingPanel != null)
+            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
     }
 
     public void HideLoadingScreen() {
-        StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 1.0f, Easings.Easing.so));
+        if(loadingPanel != null)
+            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 1.0f, Easings.Easing.so));
     }
 
     public void HideLoadingScreenInstant() {
-        StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 0.01f, Easings.Easing.s));
+        if(loadingPanel != null)
+            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 0.01f, Easings.Easing.s));
     }
 
     /*
@@ -105,16 +119,24 @@ public class MainMenuUIManager : MonoBehaviour
         StartCoroutine(LoadLevelCoroutine((int)GameScenes.LevelOne));
     }
 
+    public void LoadMainMenu() {
+        StartCoroutine(LoadLevelCoroutine((int)GameScenes.MainMenu));
+    }
+
     // what to do when a level loads
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         /* Load first level UI */
         switch(scene.buildIndex) {
             case (int)GameScenes.MainMenu:
+                InitializeMainMenu();
                 Debug.Log("Main Menu Loaded");
                 break;
+
             case (int)GameScenes.LevelOne:
+                GameObject.FindWithTag("GameExitButton").GetComponent<Button>().onClick.AddListener(LoadMainMenu);
                 Debug.Log("First Level Loaded");
                 break;
+
             case (int)GameScenes.LevelTwo:
                 Debug.Log("Second Level Loaded");
                 break;

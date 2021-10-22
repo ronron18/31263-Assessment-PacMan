@@ -364,7 +364,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positions: []
   direction: 2
-  tweener: {fileID: 1649219693}
   speed: 4
 --- !u!1 &68518343 stripped
 GameObject:
@@ -385,7 +384,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positions: []
   direction: 2
-  tweener: {fileID: 1649219693}
   speed: 4
 --- !u!1 &329932242
 GameObject:
@@ -527,7 +525,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positions: []
   direction: 2
-  tweener: {fileID: 1649219693}
   speed: 4
 --- !u!1001 &498477527
 PrefabInstance:
@@ -1214,7 +1211,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positions: []
   direction: 2
-  tweener: {fileID: 1649219693}
   speed: 4
 --- !u!1 &1305994396 stripped
 GameObject:
@@ -1235,7 +1231,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positions: []
   direction: 2
-  tweener: {fileID: 1649219693}
   speed: 4
 --- !u!1 &1388440926
 GameObject:
@@ -1642,7 +1637,7 @@ GameObject:
   - component: {fileID: 1649219693}
   m_Layer: 0
   m_Name: Managers
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1674,6 +1669,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225147627b88b9d4a84309a35e31de49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleText: {fileID: 0}
+  subtitleText: {fileID: 0}
+  menuBox: {fileID: 0}
+  loadingPanel: {fileID: 0}
+  tweener: {fileID: 0}
 --- !u!114 &1649219693
 MonoBehaviour:
   m_ObjectHideFlags: 0

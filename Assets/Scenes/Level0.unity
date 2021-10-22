@@ -12380,6 +12380,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit Button
       objectReference: {fileID: 0}
+    - target: {fileID: 139924145080489137, guid: 1838c7caf172ef6478a6a90404081ed1, type: 3}
+      propertyPath: m_TagString
+      value: GameExitButton
+      objectReference: {fileID: 0}
     - target: {fileID: 139924145243067038, guid: 1838c7caf172ef6478a6a90404081ed1, type: 3}
       propertyPath: m_Text
       value: 'Exit

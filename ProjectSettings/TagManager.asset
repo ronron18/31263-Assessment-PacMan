@@ -8,6 +8,8 @@ TagManager:
   - SubtitleText
   - MenuBox
   - LoadingPanel
+  - GameExitButton
+  - Manager
   layers:
   - Default
   - TransparentFX
