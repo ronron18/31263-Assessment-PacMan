@@ -109,19 +109,21 @@ public class UIManager : MonoBehaviour
 
     // Load levels
     public void LoadFirstLevel() {
+        menuBox.transform.Find("Level 1 Button").GetComponent<Button>().interactable = false;
+        menuBox.transform.Find("Level 2 Button").GetComponent<Button>().interactable = false;
+        menuBox.transform.Find("Exit Button").GetComponent<Button>().interactable = false;
         StartCoroutine(LoadLevelCoroutine((int)GameScenes.LevelOne));
     }
 
     public void LoadMainMenu() {
+        GameObject.FindWithTag("GameExitButton").GetComponent<Button>().interactable = false;
         StartCoroutine(LoadLevelCoroutine((int)GameScenes.MainMenu));
     }
 
     // what to do when a level loads
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        /* Load first level UI */
         switch(scene.buildIndex) {
             case (int)GameScenes.MainMenu:
-                Destroy(gameObject);
                 Debug.Log("Main Menu Loaded");
                 break;
 
@@ -132,6 +134,27 @@ public class UIManager : MonoBehaviour
 
             case (int)GameScenes.LevelTwo:
                 Debug.Log("Second Level Loaded");
+                break;
+        }
+    }
+
+    /* 
+        basically LateOnSceneLoaded, This is used to destroy the old manager since we have a new one as a replacement when accessing the main menu.
+        Can't really think off a better solution :'(((
+    */
+    public void DoStuffAfterLevelIsLoaded(int level) {
+        switch(level) {
+            case (int)GameScenes.MainMenu:
+                Destroy(gameObject);
+                Debug.Log("Main Menu Loaded2");
+                break;
+
+            case (int)GameScenes.LevelOne:
+                Debug.Log("First Level Loaded2");
+                break;
+
+            case (int)GameScenes.LevelTwo:
+                Debug.Log("Second Level Loaded2");
                 break;
         }
     }
@@ -151,6 +174,7 @@ public class UIManager : MonoBehaviour
         while(!loadScene.isDone) 
             yield return null;
         HideLoadingScreen();
+        DoStuffAfterLevelIsLoaded(level);
     }
 
     // Coroutine to lerp a UI element because i won't bother making another tweener/tween class for RectTransforms >:(
