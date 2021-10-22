@@ -6,7 +6,7 @@ public class MainMenuPlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Vector3[] positions;
     public int direction = 2;   // Initial direction
-    private Tweener tweener;
+    [SerializeField] private Tweener tweener;
 
     [SerializeField] private float speed = 10.0f;  // Speed, Movement duration depends on distance.
     private float duration = 0;
@@ -14,7 +14,7 @@ public class MainMenuPlayerAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tweener = GameObject.FindWithTag("Manager").GetComponent<Tweener>();
+        //tweener = GameObject.FindWithTag("Manager").GetComponent<Tweener>();
         positions = new Vector3[4];
         positions[0] = new Vector3(5.0f, 3.0f, 0.0f);
         positions[1] = new Vector3(5.0f, -3.0f, 0.0f); 

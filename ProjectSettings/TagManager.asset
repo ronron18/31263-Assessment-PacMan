@@ -10,6 +10,8 @@ TagManager:
   - LoadingPanel
   - GameExitButton
   - Manager
+  - Level1Button
+  - Level2Button
   layers:
   - Default
   - TransparentFX

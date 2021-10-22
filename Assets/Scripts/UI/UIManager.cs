@@ -33,13 +33,6 @@ public class UIManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-        if(manager == null) {
-            manager = gameObject;
-        } 
-        else {
-            Destroy(gameObject);
-        }
-
         tweener = GetComponent<Tweener>();
         InitializeMainMenu();
         HideLoadingScreenInstant();
@@ -68,7 +61,7 @@ public class UIManager : MonoBehaviour
     */
     private void InitializeMainMenu() {
         menuBox = GameObject.FindWithTag("MenuBox").GetComponent<RectTransform>();
-        loadingPanel = GameObject.FindWithTag("LoadingPanel").GetComponent<RectTransform>();
+        loadingPanel = gameObject.transform.Find("LoadingCanvas").Find("Panel").GetComponent<RectTransform>();
         titleText = GameObject.FindWithTag("TitleText").GetComponent<Text>();
         subtitleText = GameObject.FindWithTag("SubtitleText").GetComponent<Text>();
         menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
@@ -128,7 +121,7 @@ public class UIManager : MonoBehaviour
         /* Load first level UI */
         switch(scene.buildIndex) {
             case (int)GameScenes.MainMenu:
-                InitializeMainMenu();
+                Destroy(gameObject);
                 Debug.Log("Main Menu Loaded");
                 break;
 
