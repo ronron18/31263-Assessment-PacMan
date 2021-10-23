@@ -12,6 +12,7 @@ TagManager:
   - Manager
   - Level1Button
   - Level2Button
+  - Tilemap
   layers:
   - Default
   - TransparentFX
