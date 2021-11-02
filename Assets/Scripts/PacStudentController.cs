@@ -53,8 +53,8 @@ public class PacStudentController : MonoBehaviour
 
     void MovePlayer()
     {
-        Debug.Log("lastInput: " + IsWalkable(lastInput));
-        Debug.Log("currentInput: " + IsWalkable(currentInput));
+        //Debug.Log("lastInput: " + IsWalkable(lastInput));
+        //Debug.Log("currentInput: " + IsWalkable(currentInput));
 
         if(IsWalkable(lastInput))
         { // IF WALKABLE
@@ -113,7 +113,7 @@ public class PacStudentController : MonoBehaviour
                             );
             PlayMovementEffects();
         }
-        Debug.Log(moveTargetPosition);
+        //Debug.Log(moveTargetPosition);
     }
 
     bool IsWalkable(KeyCode input)

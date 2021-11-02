@@ -3546,7 +3546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5, y: -8.5, z: -10}
+  m_LocalPosition: {x: 3.5, y: -7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10906,6 +10906,7 @@ GameObject:
   - component: {fileID: 984299076}
   - component: {fileID: 984299075}
   - component: {fileID: 984299077}
+  - component: {fileID: 984299078}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -10970,6 +10971,21 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 19fe7da1d88ca9b44aa28c8777ca127e, type: 3}
   - {fileID: 8300000, guid: f0a2ac87d2eff0040ba02e25f9e558ce, type: 3}
   movementSpeed: 30
+--- !u!114 &984299078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984299073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2a7208b262dda4ba7d404a84140e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  midPoint: {x: 0, y: 0}
+  cherryPrefab: {fileID: 3165329112828462880, guid: a75fab99af2be5e4e8b3c4ffd49634f4, type: 3}
+  duration: 8
 --- !u!1001 &985085910
 PrefabInstance:
   m_ObjectHideFlags: 0
