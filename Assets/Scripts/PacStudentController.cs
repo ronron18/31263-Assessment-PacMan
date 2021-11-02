@@ -8,6 +8,7 @@ public class PacStudentController : MonoBehaviour
     private Tweener tweener;
     private GameObject player;
     private AudioSource playerAudioSource;
+    private ParticleSystem playerParticleSystem;
     private Tilemap tiles;
 
     public AudioClip[] audioClips;
@@ -29,6 +30,7 @@ public class PacStudentController : MonoBehaviour
         tweener = GetComponent<Tweener>();
         player = GameObject.FindWithTag("Player");
         playerAudioSource = player.GetComponent<AudioSource>();
+        playerParticleSystem = player.transform.Find("Walk Particles").GetComponent<ParticleSystem>();
         moveTargetPosition = player.transform.position;
     }
 
@@ -81,7 +83,7 @@ public class PacStudentController : MonoBehaviour
                                 moveTargetPosition,
                                 10.0f/movementSpeed 
                                 );
-            PlayAudio();
+            PlayMovementEffects();
         }
         else if(IsWalkable(currentInput))
         { // IF NOT WALKABLE but CURRENT INPUT IS WALKABLE
@@ -109,7 +111,7 @@ public class PacStudentController : MonoBehaviour
                             moveTargetPosition,
                             10.0f/movementSpeed 
                             );
-            PlayAudio();
+            PlayMovementEffects();
         }
         Debug.Log(moveTargetPosition);
     }
@@ -144,10 +146,11 @@ public class PacStudentController : MonoBehaviour
         return true; // Check if there is no obstacle, true if obstacle is found
     }
 
-    void PlayAudio()
+    void PlayMovementEffects()
     {
         if(moveTargetPosition != player.transform.position)     // This is so that audio does not play when the game starts
         {
+            // AUDIO
             if(false) // Has pellet
             {
                 playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
@@ -156,7 +159,9 @@ public class PacStudentController : MonoBehaviour
             {
                 playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.walk], 0.65f);
             }
+
+            // Particle Effects
+            playerParticleSystem.Play();
         }
-        
     }
 }
