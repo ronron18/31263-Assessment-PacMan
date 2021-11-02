@@ -6,12 +6,20 @@ using UnityEngine.Tilemaps;
 public class PacStudentController : MonoBehaviour
 {
     private Tweener tweener;
-    public GameObject player;
+    private GameObject player;
+    private AudioSource playerAudioSource;
     private Tilemap tiles;
+
+    public AudioClip[] audioClips;
+    private enum AudioClips
+    {
+        walk, pellet
+    }
 
     [SerializeField] float movementSpeed;
     private KeyCode lastInput;
     private KeyCode currentInput;
+    private Vector3 moveTargetPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +28,8 @@ public class PacStudentController : MonoBehaviour
         tiles = GameObject.FindWithTag("Tilemap").GetComponent<Tilemap>();
         tweener = GetComponent<Tweener>();
         player = GameObject.FindWithTag("Player");
+        playerAudioSource = player.GetComponent<AudioSource>();
+        moveTargetPosition = player.transform.position;
     }
 
     // Update is called once per frame
@@ -39,41 +49,73 @@ public class PacStudentController : MonoBehaviour
         //Debug.Log("Last Input" + lastInput);
     }
 
-    void MovePlayer() {
-        Debug.Log(IsWalkable());
-        if(IsWalkable()) { // IF WALKABLE
+    void MovePlayer()
+    {
+        Debug.Log("lastInput: " + IsWalkable(lastInput));
+        Debug.Log("currentInput: " + IsWalkable(currentInput));
+
+        if(IsWalkable(lastInput))
+        { // IF WALKABLE
             currentInput = lastInput;
-            Vector3 target = player.transform.position;
-            switch(currentInput) {
+            switch(currentInput)
+            {
                 case KeyCode.W:
                     player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.up);
-                    target = player.transform.position + Vector3.up;
+                    moveTargetPosition = player.transform.position + Vector3.up;
                     break;
                 case KeyCode.A:
                     player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.left);
-                    target = player.transform.position + Vector3.left;
+                    moveTargetPosition = player.transform.position + Vector3.left;
                     break;
                 case KeyCode.S:
                     player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.down);
-                    target = player.transform.position + Vector3.down;
+                    moveTargetPosition = player.transform.position + Vector3.down;
                     break;
                 case KeyCode.D:
                     player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.right);
-                    target = player.transform.position + Vector3.right;
+                    moveTargetPosition = player.transform.position + Vector3.right;
                     break;
             }
             tweener.AddTween(player.transform, 
                                 player.transform.position, 
-                                target,
+                                moveTargetPosition,
                                 10.0f/movementSpeed 
                                 );
+            PlayAudio();
         }
-        else { // IF NOT WALKABLE
-
+        else if(IsWalkable(currentInput))
+        { // IF NOT WALKABLE but CURRENT INPUT IS WALKABLE
+            switch(currentInput)
+            {
+                    case KeyCode.W:
+                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.up);
+                        moveTargetPosition = player.transform.position + Vector3.up;
+                        break;
+                    case KeyCode.A:
+                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.left);
+                        moveTargetPosition = player.transform.position + Vector3.left;
+                        break;
+                    case KeyCode.S:
+                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.down);
+                        moveTargetPosition = player.transform.position + Vector3.down;
+                        break;
+                    case KeyCode.D:
+                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.right);
+                        moveTargetPosition = player.transform.position + Vector3.right;
+                        break;
+            }
+            tweener.AddTween(player.transform, 
+                            player.transform.position, 
+                            moveTargetPosition,
+                            10.0f/movementSpeed 
+                            );
+            PlayAudio();
         }
+        Debug.Log(moveTargetPosition);
     }
 
-    bool IsWalkable() {
+    bool IsWalkable(KeyCode input)
+    {
         // Check if adjacent tile is walkable, then override currentInput <70%>
         
         //Debug.Log(playerPositionInTilemap);
@@ -81,7 +123,8 @@ public class PacStudentController : MonoBehaviour
         Tile adjacentTile = null;
         Vector3 target = player.transform.position;
 
-        switch(lastInput) {
+        switch(input)
+        {
             case KeyCode.W:
                 target = player.transform.position + Vector3.up;
                 break;
@@ -96,8 +139,24 @@ public class PacStudentController : MonoBehaviour
                 break;
         }
         adjacentTile = tiles.GetTile<Tile>(tiles.WorldToCell(target));
+
         if(adjacentTile != null) return false;
-        
         return true; // Check if there is no obstacle, true if obstacle is found
+    }
+
+    void PlayAudio()
+    {
+        if(moveTargetPosition != player.transform.position)     // This is so that audio does not play when the game starts
+        {
+            if(false) // Has pellet
+            {
+                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
+            }
+            else // No Pellet
+            {
+                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.walk], 0.65f);
+            }
+        }
+        
     }
 }

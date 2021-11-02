@@ -267,7 +267,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.508
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -10907,7 +10907,7 @@ GameObject:
   - component: {fileID: 984299075}
   - component: {fileID: 984299077}
   m_Layer: 0
-  m_Name: TweenController
+  m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10966,7 +10966,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521073ae5c2bdf1499a60f0ea5fe3be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  audioClips:
+  - {fileID: 8300000, guid: 19fe7da1d88ca9b44aa28c8777ca127e, type: 3}
+  - {fileID: 8300000, guid: f0a2ac87d2eff0040ba02e25f9e558ce, type: 3}
   movementSpeed: 30
 --- !u!1001 &985085910
 PrefabInstance:
@@ -11154,7 +11156,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 19fe7da1d88ca9b44aa28c8777ca127e, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.497
   m_Pitch: 1
