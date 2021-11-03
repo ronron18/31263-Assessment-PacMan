@@ -11,6 +11,7 @@ public class PacStudentController : MonoBehaviour
     private ParticleSystem playerParticleSystem;
     private Animator playerAnimator;
     private Tilemap tiles;
+    [SerializeField] private GameObject bumpParticleGameObject;
 
     public AudioClip[] audioClips;
     private enum AudioClips
@@ -151,8 +152,16 @@ public class PacStudentController : MonoBehaviour
             // play bump sound
             playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.bump], 1.5f);
             Debug.Log("hit wall");
-            wallHit = true;
+
             // play bump particle effect
+            // move particle effect to position between player and wall
+            bumpParticleGameObject.transform.position = (target + transform.position)/2;
+            // Play the particle effect ONCE
+            bumpParticleGameObject.GetComponent<ParticleSystem>().Play();
+
+            // Set wallHit to true as player had collided with a wall
+            wallHit = true;
+            
         }
 
         if(adjacentTile != null) return false;
