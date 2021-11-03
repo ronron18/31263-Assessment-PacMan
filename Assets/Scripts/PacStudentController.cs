@@ -188,11 +188,19 @@ public class PacStudentController : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.CompareTag("Pellet"))
+        switch(collider.gameObject.tag)
         {
-            playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
-            Destroy(collider.gameObject);
-            scoreManager.currentScore += 10;
+            case "Pellet":
+                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
+                Destroy(collider.gameObject);
+                scoreManager.currentScore += 10;
+            break;
+
+            case "BonusCherry":
+                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
+                Destroy(collider.gameObject);
+                scoreManager.currentScore += 100;
+            break;
         }
         Debug.Log("Triggered!");
     }
