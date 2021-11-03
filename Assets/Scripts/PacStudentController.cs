@@ -67,6 +67,7 @@ public class PacStudentController : MonoBehaviour
         { // IF WALKABLE
             currentInput = lastInput;
             wallHit = false;
+            playerAnimator.speed = 1.0f; // Resumes the animation
             switch(currentInput)
             {
                 case KeyCode.W:
@@ -163,9 +164,11 @@ public class PacStudentController : MonoBehaviour
             // Play the particle effect ONCE
             bumpParticleGameObject.GetComponent<ParticleSystem>().Play();
 
+            // Pauses the animation
+            playerAnimator.speed = 0.0f;
+
             // Set wallHit to true as player had collided with a wall
             wallHit = true;
-            
         }
 
         if(adjacentTile != null) return false;
