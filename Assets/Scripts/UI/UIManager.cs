@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /*
-    basically, this script is made to control animated things in the main menu.
-    including pac-student and stuff.
+    basically, yes
 */
 
 public class UIManager : MonoBehaviour
@@ -19,11 +18,17 @@ public class UIManager : MonoBehaviour
 
     public static GameObject manager;
 
+    // Main Menu
     public Text titleText;
     public Text subtitleText;
     public RectTransform menuBox;
     public RectTransform loadingPanel;
     public Tweener tweener;
+
+    // LevelOne
+    public Text scoreText;
+    public Text timeText;
+    public ScoreManager scoreManager;
 
     private float currentTitleHue = 0.0f;
     private const float menuRatio = 800.0f/1920;
@@ -46,6 +51,8 @@ public class UIManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.S)) HideMenu();
         */
         if(titleText != null && subtitleText != null) CycleColors();  // Cycle through colors for title and subtitle
+
+        if(scoreText != null && scoreManager != null) scoreText.text = scoreManager.currentScore.ToString();
     }
 
     // Cycles through colors for title and subtitle
@@ -67,6 +74,13 @@ public class UIManager : MonoBehaviour
         menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
         loadingPanel.sizeDelta = new Vector2(Screen.width, Screen.height);
         ShowMenu();
+    }
+
+    private void InitializeLevelOne() {
+        GameObject.FindWithTag("GameExitButton").GetComponent<Button>().onClick.AddListener(LoadMainMenu);
+        scoreText = GameObject.FindWithTag("ScoreText").GetComponent<Text>();
+        timeText = GameObject.FindWithTag("TimeText").GetComponent<Text>();
+        scoreManager = GameObject.FindWithTag("MainGameController").GetComponent<ScoreManager>();
     }
 
     public void ExitGame() {
@@ -128,7 +142,7 @@ public class UIManager : MonoBehaviour
                 break;
 
             case (int)GameScenes.LevelOne:
-                GameObject.FindWithTag("GameExitButton").GetComponent<Button>().onClick.AddListener(LoadMainMenu);
+                InitializeLevelOne();
                 Debug.Log("First Level Loaded");
                 break;
 

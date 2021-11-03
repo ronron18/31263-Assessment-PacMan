@@ -12,6 +12,7 @@ public class PacStudentController : MonoBehaviour
     private Animator playerAnimator;
     private Tilemap tiles;
     [SerializeField] private GameObject bumpParticleGameObject;
+    private ScoreManager scoreManager;
 
     public AudioClip[] audioClips;
     private enum AudioClips
@@ -36,6 +37,7 @@ public class PacStudentController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerParticleSystem = transform.Find("Walk Particles").GetComponent<ParticleSystem>();
         moveTargetPosition = transform.position;
+        scoreManager = GameObject.FindWithTag("MainGameController").GetComponent<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -186,6 +188,8 @@ public class PacStudentController : MonoBehaviour
         if(collider.gameObject.CompareTag("Pellet"))
         {
             playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
+            Destroy(collider.gameObject);
+            scoreManager.currentScore += 10;
         }
         Debug.Log("Triggered!");
     }

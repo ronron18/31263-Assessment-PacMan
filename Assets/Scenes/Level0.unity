@@ -15779,8 +15779,9 @@ GameObject:
   - component: {fileID: 984299076}
   - component: {fileID: 984299075}
   - component: {fileID: 984299078}
+  - component: {fileID: 984299077}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: Level0Controllers
   m_TagString: MainGameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15827,6 +15828,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa84e7291aa6e634699ce6c8c2173f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &984299077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984299073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff79a698f5b85b45bafa449bb1eb07e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: 0
+  currentTime: 0
 --- !u!114 &984299078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16630,7 +16645,7 @@ GameObject:
   - component: {fileID: 1091814308}
   m_Layer: 5
   m_Name: TimerText
-  m_TagString: Untagged
+  m_TagString: TimeText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21745,7 +21760,7 @@ GameObject:
   - component: {fileID: 1862629913}
   m_Layer: 5
   m_Name: ScoreText
-  m_TagString: Untagged
+  m_TagString: ScoreText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

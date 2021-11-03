@@ -16,6 +16,8 @@ TagManager:
   - MainGameController
   - Pellet
   - Teleporter
+  - ScoreText
+  - TimeText
   layers:
   - Default
   - TransparentFX
