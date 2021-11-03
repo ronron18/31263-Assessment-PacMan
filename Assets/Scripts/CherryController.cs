@@ -52,7 +52,6 @@ public class CherryController : MonoBehaviour
     {
         bool yAxisSelected = (Random.value > 0.5f); // left/right movement if true, y axis position will be selected
         bool negativeDirection = (Random.value > 0.5f); // Move to the negative direction if true.
-        cherry = Instantiate(cherryPrefab);
         float startPosition = 0.0f; 
         Vector2 startPositionVector = Vector2.zero;
 
@@ -85,6 +84,7 @@ public class CherryController : MonoBehaviour
             }
             
         }
+        cherry = Instantiate(cherryPrefab, startPositionVector, Quaternion.identity);
         Vector2 halfDistanceVector = startPositionVector - midPoint; // Stores direction, and distance
         Vector2 endPositionVector = midPoint - halfDistanceVector;
         //Debug.Log("startPositionVector " + startPositionVector);
