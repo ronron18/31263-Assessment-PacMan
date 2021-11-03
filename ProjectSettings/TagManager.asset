@@ -13,6 +13,8 @@ TagManager:
   - Level1Button
   - Level2Button
   - Tilemap
+  - MainGameController
+  - Pellet
   layers:
   - Default
   - TransparentFX

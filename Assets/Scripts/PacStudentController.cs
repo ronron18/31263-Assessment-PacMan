@@ -9,6 +9,7 @@ public class PacStudentController : MonoBehaviour
     private GameObject player;
     private AudioSource playerAudioSource;
     private ParticleSystem playerParticleSystem;
+    private Animator playerAnimator;
     private Tilemap tiles;
 
     public AudioClip[] audioClips;
@@ -27,11 +28,11 @@ public class PacStudentController : MonoBehaviour
     {
         //tweener = GameObject.FindWithTag("Manager").GetComponent<Tweener>();
         tiles = GameObject.FindWithTag("Tilemap").GetComponent<Tilemap>();
-        tweener = GetComponent<Tweener>();
-        player = GameObject.FindWithTag("Player");
-        playerAudioSource = player.GetComponent<AudioSource>();
-        playerParticleSystem = player.transform.Find("Walk Particles").GetComponent<ParticleSystem>();
-        moveTargetPosition = player.transform.position;
+        tweener = GameObject.FindWithTag("MainGameController").GetComponent<Tweener>();
+        playerAudioSource = GetComponent<AudioSource>();
+        playerAnimator = GetComponent<Animator>();
+        playerParticleSystem = transform.Find("Walk Particles").GetComponent<ParticleSystem>();
+        moveTargetPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -46,7 +47,7 @@ public class PacStudentController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.D))
             lastInput = KeyCode.D;
 
-        if(!tweener.TweenExists(player.transform))
+        if(!tweener.TweenExists(transform))
             MovePlayer();
         //Debug.Log("Last Input" + lastInput);
     }
@@ -62,24 +63,24 @@ public class PacStudentController : MonoBehaviour
             switch(currentInput)
             {
                 case KeyCode.W:
-                    player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.up);
-                    moveTargetPosition = player.transform.position + Vector3.up;
+                    playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.up);
+                    moveTargetPosition = transform.position + Vector3.up;
                     break;
                 case KeyCode.A:
-                    player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.left);
-                    moveTargetPosition = player.transform.position + Vector3.left;
+                    playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.left);
+                    moveTargetPosition = transform.position + Vector3.left;
                     break;
                 case KeyCode.S:
-                    player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.down);
-                    moveTargetPosition = player.transform.position + Vector3.down;
+                    playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.down);
+                    moveTargetPosition = transform.position + Vector3.down;
                     break;
                 case KeyCode.D:
-                    player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.right);
-                    moveTargetPosition = player.transform.position + Vector3.right;
+                    playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.right);
+                    moveTargetPosition = transform.position + Vector3.right;
                     break;
             }
-            tweener.AddTween(player.transform, 
-                                player.transform.position, 
+            tweener.AddTween(transform, 
+                                transform.position, 
                                 moveTargetPosition,
                                 10.0f/movementSpeed 
                                 );
@@ -90,24 +91,24 @@ public class PacStudentController : MonoBehaviour
             switch(currentInput)
             {
                     case KeyCode.W:
-                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.up);
-                        moveTargetPosition = player.transform.position + Vector3.up;
+                        playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.up);
+                        moveTargetPosition = transform.position + Vector3.up;
                         break;
                     case KeyCode.A:
-                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.left);
-                        moveTargetPosition = player.transform.position + Vector3.left;
+                        playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.left);
+                        moveTargetPosition = transform.position + Vector3.left;
                         break;
                     case KeyCode.S:
-                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.down);
-                        moveTargetPosition = player.transform.position + Vector3.down;
+                        playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.down);
+                        moveTargetPosition = transform.position + Vector3.down;
                         break;
                     case KeyCode.D:
-                        player.GetComponent<Animator>().SetInteger("direction", (int)Directions.PlayerAnimDirections.right);
-                        moveTargetPosition = player.transform.position + Vector3.right;
+                        playerAnimator.SetInteger("direction", (int)Directions.PlayerAnimDirections.right);
+                        moveTargetPosition = transform.position + Vector3.right;
                         break;
             }
-            tweener.AddTween(player.transform, 
-                            player.transform.position, 
+            tweener.AddTween(transform, 
+                            transform.position, 
                             moveTargetPosition,
                             10.0f/movementSpeed 
                             );
@@ -123,21 +124,21 @@ public class PacStudentController : MonoBehaviour
         //Debug.Log(playerPositionInTilemap);
 
         Tile adjacentTile = null;
-        Vector3 target = player.transform.position;
+        Vector3 target = transform.position;
 
         switch(input)
         {
             case KeyCode.W:
-                target = player.transform.position + Vector3.up;
+                target = transform.position + Vector3.up;
                 break;
             case KeyCode.A:
-                target = player.transform.position + Vector3.left;
+                target = transform.position + Vector3.left;
                 break;
             case KeyCode.S:
-                target = player.transform.position + Vector3.down;
+                target = transform.position + Vector3.down;
                 break;
             case KeyCode.D:
-                target = player.transform.position + Vector3.right;
+                target = transform.position + Vector3.right;
                 break;
         }
         adjacentTile = tiles.GetTile<Tile>(tiles.WorldToCell(target));
@@ -148,12 +149,12 @@ public class PacStudentController : MonoBehaviour
 
     void PlayMovementEffects()
     {
-        if(moveTargetPosition != player.transform.position)     // This is so that audio does not play when the game starts
+        if(moveTargetPosition != transform.position)     // This is so that audio does not play when the game starts
         {
             // AUDIO
             if(false) // Has pellet
             {
-                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
+                
             }
             else // No Pellet
             {
@@ -162,6 +163,14 @@ public class PacStudentController : MonoBehaviour
 
             // Particle Effects
             playerParticleSystem.Play();
+        }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.CompareTag("Pellet"))
+        {
+            playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
         }
     }
 }

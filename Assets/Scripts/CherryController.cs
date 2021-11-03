@@ -28,7 +28,7 @@ public class CherryController : MonoBehaviour
         minimumPlayableHeight = mainCamera.ScreenToWorldPoint(Vector2.zero).y - 1.0f;
         maximumPlayableHeight = mainCamera.ScreenToWorldPoint(new Vector2(0, Screen.height)).y + 1.0f;
         midPoint = new Vector2((maximumPlayableWidth+minimumPlayableWidth)/2, (maximumPlayableHeight+minimumPlayableHeight)/2);
-        Debug.Log(midPoint);
+        //Debug.Log(midPoint);
     }
 
     // Update is called once per frame
@@ -44,7 +44,7 @@ public class CherryController : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        Debug.Log("Tweener timer: " + timer);
+        //Debug.Log("Tweener timer: " + timer);
     }
 
     // bonus "cherry" spawning, idk how this is supposed to be implemented but i tried :)
