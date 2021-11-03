@@ -15,6 +15,7 @@ TagManager:
   - Tilemap
   - MainGameController
   - Pellet
+  - Teleporter
   layers:
   - Default
   - TransparentFX

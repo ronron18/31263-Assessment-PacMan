@@ -24,6 +24,7 @@ public class PacStudentController : MonoBehaviour
     private KeyCode currentInput;
     private Vector3 moveTargetPosition;
     private bool wallHit = false;   // Checks if object have hit a wall
+    private bool inTeleporter = false; // Checks if the player is in a teleporter
 
     // Start is called before the first frame update
     void Start()
@@ -49,8 +50,9 @@ public class PacStudentController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.D))
             lastInput = KeyCode.D;
 
-        if(!tweener.TweenExists(transform))
+        if(!tweener.TweenExists(transform) && !inTeleporter)
             MovePlayer();
+        
         //Debug.Log("Last Input" + lastInput);
     }
 
@@ -184,6 +186,22 @@ public class PacStudentController : MonoBehaviour
         if(collider.gameObject.CompareTag("Pellet"))
         {
             playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
+        }
+        Debug.Log("Triggered!");
+    }
+
+    void OnTriggerStay(Collider collider)
+    {
+        if(collider.gameObject.CompareTag("Teleporter"))
+        {
+            inTeleporter = true;    // Indicates that player is in the teleporter, telling component not to tween player
+            if(!tweener.TweenExists(transform)) // Teleport when player has done tweening
+            {
+                Vector2 targetPosition = collider.gameObject.GetComponent<TeleporterController>().targetTeleporter.exitPosition;
+                transform.position = targetPosition;
+                Debug.Log("Teleported player");
+                inTeleporter = false;   // PLAYER CAN NOW MOVE AGAIN!!!
+            }
         }
     }
 }
