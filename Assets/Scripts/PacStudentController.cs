@@ -151,16 +151,8 @@ public class PacStudentController : MonoBehaviour
     {
         if(moveTargetPosition != transform.position)     // This is so that audio does not play when the game starts
         {
-            // AUDIO
-            if(false) // Has pellet
-            {
-                
-            }
-            else // No Pellet
-            {
-                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.walk], 0.65f);
-            }
-
+            // Audio
+            playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.walk], 0.65f);
             // Particle Effects
             playerParticleSystem.Play();
         }
