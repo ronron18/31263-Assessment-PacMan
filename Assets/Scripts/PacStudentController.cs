@@ -15,13 +15,14 @@ public class PacStudentController : MonoBehaviour
     public AudioClip[] audioClips;
     private enum AudioClips
     {
-        walk, pellet
+        walk, pellet, bump
     }
 
     [SerializeField] float movementSpeed;
     private KeyCode lastInput;
     private KeyCode currentInput;
     private Vector3 moveTargetPosition;
+    private bool wallHit = false;   // Checks if object have hit a wall
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +61,7 @@ public class PacStudentController : MonoBehaviour
         if(IsWalkable(lastInput))
         { // IF WALKABLE
             currentInput = lastInput;
+            wallHit = false;
             switch(currentInput)
             {
                 case KeyCode.W:
@@ -142,6 +144,16 @@ public class PacStudentController : MonoBehaviour
                 break;
         }
         adjacentTile = tiles.GetTile<Tile>(tiles.WorldToCell(target));
+
+        // Play bump particle effect
+        if(input == currentInput && adjacentTile != null && !tweener.TweenExists(transform) && wallHit == false)
+        {
+            // play bump sound
+            playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.bump], 1.5f);
+            Debug.Log("hit wall");
+            wallHit = true;
+            // play bump particle effect
+        }
 
         if(adjacentTile != null) return false;
         return true; // Check if there is no obstacle, true if obstacle is found
