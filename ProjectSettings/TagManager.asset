@@ -18,6 +18,7 @@ TagManager:
   - Teleporter
   - ScoreText
   - TimeText
+  - BonusCherry
   layers:
   - Default
   - TransparentFX
