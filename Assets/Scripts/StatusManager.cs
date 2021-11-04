@@ -10,9 +10,20 @@ public class StatusManager : MonoBehaviour
     public float currentTime;
     public int currentLife = 3;
     public bool gameOver = false;
+    public bool gameStarted = false;
 
+    void Start()
+    {
+        
+    }
     void Update()
     {
+        if(!gameStarted)    // Initialize score and time
+        {
+            currentScore = 0;
+            currentTime = 0.0f;
+        }
+
         if((currentLife <= 0 || GameObject.FindWithTag("Pellet") == null) && !gameOver) // If Pellet not found or no lives left
         {
             // game over

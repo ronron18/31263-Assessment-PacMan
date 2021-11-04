@@ -76,7 +76,10 @@ public class UIManager : MonoBehaviour
         */
         if(titleText != null && subtitleText != null) CycleColors();  // Cycle through colors for title and subtitle
 
-        if(scoreText != null && statusManager != null) scoreText.text = statusManager.currentScore.ToString();
+        if(scoreText != null && statusManager != null)
+            scoreText.text = statusManager.currentScore.ToString();
+        if(timeText != null && statusManager != null)
+            timeText.text = ((int)(statusManager.currentTime/60)).ToString("D2") + ":" + ((int)(statusManager.currentTime % 60)).ToString("D2") + ":" + ((int)((statusManager.currentTime%1)*100)).ToString("D2");
 
         if(statusManager != null)
         {
@@ -142,7 +145,7 @@ public class UIManager : MonoBehaviour
         int bestScoreValue = PlayerPrefs.GetInt("BestScore", 0);
         float bestTimeValue = PlayerPrefs.GetFloat("BestTime", 0.0f);
         bestScore.text = "High Score: " + bestScoreValue;
-        bestTime.text = "Best Time: " + (int)(bestTimeValue/60) + ":" + (int)(bestTimeValue % 60) + ":" + (int)((bestTimeValue%1)*10);
+        bestTime.text = "Best Time: " + ((int)(bestTimeValue/60)).ToString("D2") + ":" + ((int)(bestTimeValue % 60)).ToString("D2") + ":" + ((int)((bestTimeValue%1)*100)).ToString("D2");
 
         Debug.Log("Main menu initialized");
         ShowMenu();
@@ -288,6 +291,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1); 
         countdown.text = "";
         Time.timeScale = 1.0f;
+        statusManager.gameStarted = true;
         GameObject.FindWithTag("GameExitButton").GetComponent<Button>().onClick.AddListener(LoadMainMenu);
     }
 
