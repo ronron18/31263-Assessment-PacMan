@@ -12,7 +12,7 @@ public class PacStudentController : MonoBehaviour
     [SerializeField] private GameObject bumpParticleGameObject;
 
     // Game Manager components
-    private ScoreManager scoreManager;                  // Allows score to be calculated
+    private StatusManager statusManager;                  // Allows score to be calculated
     private GhostsController ghosts;                    // Allows the change in ghost's state when power up is consumed
     private Tweener tweener;                            // Allows player movement
 
@@ -35,7 +35,7 @@ public class PacStudentController : MonoBehaviour
         tiles = GameObject.FindWithTag("Tilemap").GetComponent<Tilemap>();
 
         tweener = GameObject.FindWithTag("MainGameController").GetComponent<Tweener>();
-        scoreManager = GameObject.FindWithTag("MainGameController").GetComponent<ScoreManager>();
+        statusManager = GameObject.FindWithTag("MainGameController").GetComponent<StatusManager>();
         ghosts = GameObject.FindWithTag("MainGameController").GetComponent<GhostsController>();
 
         playerAudioSource = GetComponent<AudioSource>();
@@ -160,7 +160,7 @@ public class PacStudentController : MonoBehaviour
         {
             // play bump sound
             playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.bump], 1.5f);
-            Debug.Log("hit wall");
+            //Debug.Log("hit wall");
 
             // play bump particle effect
             // move particle effect to position between player and wall
@@ -197,13 +197,13 @@ public class PacStudentController : MonoBehaviour
             case "Pellet":
                 playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
                 Destroy(collider.gameObject);
-                scoreManager.currentScore += 10;
+                statusManager.currentScore += 10;
             break;
 
             case "BonusCherry":
                 playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
                 Destroy(collider.gameObject);
-                scoreManager.currentScore += 100;
+                statusManager.currentScore += 100;
             break;
 
             case "PowerUp":
@@ -212,7 +212,7 @@ public class PacStudentController : MonoBehaviour
                 Destroy(collider.gameObject);
             break;
         }
-        Debug.Log("Triggered!");
+        //Debug.Log("Triggered!");
     }
 
     void OnTriggerStay(Collider collider)
@@ -224,7 +224,7 @@ public class PacStudentController : MonoBehaviour
             {
                 Vector2 targetPosition = collider.gameObject.GetComponent<TeleporterController>().targetTeleporter.exitPosition;
                 transform.position = targetPosition;
-                Debug.Log("Teleported player");
+                //Debug.Log("Teleported player");
                 inTeleporter = false;   // PLAYER CAN NOW MOVE AGAIN!!!
             }
         }

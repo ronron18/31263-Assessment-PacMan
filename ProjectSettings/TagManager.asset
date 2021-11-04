@@ -22,6 +22,7 @@ TagManager:
   - PowerUp
   - GhostScaredStatus
   - LifeIndicators
+  - HUD
   layers:
   - Default
   - TransparentFX

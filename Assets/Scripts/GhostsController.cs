@@ -38,7 +38,7 @@ public class GhostsController : MonoBehaviour
             scaredTimer = 0.0f;
             SetNormal();
         }
-        Debug.Log("ScaredTimer: " + scaredTimer);
+        //Debug.Log("ScaredTimer: " + scaredTimer);
     }
 
     // Change ghost to scared state

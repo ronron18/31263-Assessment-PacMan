@@ -30,11 +30,11 @@ public class UIManager : MonoBehaviour
     public Text timeText;
     public RectTransform ghostScaredStatus;
     public Text ghostScaredTimer;
-    public RectTransform[] lifeIndicators;
-    public ScoreManager scoreManager;
+    public List<GameObject> lifeIndicators;
+    public StatusManager statusManager;
     public GhostsController ghostsController;
     public bool ghostScaredUIShown;
-    public RectTransform lifeIndicatorPrefab;
+    public GameObject lifeIndicatorPrefab;
 
     private float currentTitleHue = 0.0f;
     private const float menuRatio = 800.0f/1920;
@@ -58,7 +58,16 @@ public class UIManager : MonoBehaviour
         */
         if(titleText != null && subtitleText != null) CycleColors();  // Cycle through colors for title and subtitle
 
-        if(scoreText != null && scoreManager != null) scoreText.text = scoreManager.currentScore.ToString();
+        if(scoreText != null && statusManager != null) scoreText.text = statusManager.currentScore.ToString();
+
+        if(statusManager != null && lifeIndicators != null)
+        {
+            if(statusManager.currentLife < lifeIndicators.Count)
+            {
+                MinusOneLife();
+            }
+        }
+
         if(ghostsController != null && ghostScaredStatus != null)
         {
             if(ghostsController.inScaredState)
@@ -110,7 +119,7 @@ public class UIManager : MonoBehaviour
         ghostsController = GameObject.FindWithTag("MainGameController").GetComponent<GhostsController>();
         ghostScaredTimer = ghostScaredStatus.transform.Find("ScaredStateTimer").GetComponent<Text>();
         ghostScaredUIShown = false;
-        scoreManager = GameObject.FindWithTag("MainGameController").GetComponent<ScoreManager>();
+        statusManager = GameObject.FindWithTag("MainGameController").GetComponent<StatusManager>();
         InitiateLifeIndicator();
     }
 
@@ -246,6 +255,25 @@ public class UIManager : MonoBehaviour
     // Initiates life indicators
     void InitiateLifeIndicator()
     {
+        lifeIndicators = new List<GameObject>();
+        float currentPos = 0.0f;
+        //statusManager.currentLife
+        Debug.Log(statusManager.currentLife);
+        for(int i=0; i < statusManager.currentLife; i++)
+        {
+            GameObject lifeIndicator = Instantiate(lifeIndicatorPrefab, GameObject.FindWithTag("HUD").transform);
+            lifeIndicators.Add(lifeIndicator);
+            lifeIndicator.GetComponent<RectTransform>().anchoredPosition = new Vector2(currentPos, 0.0f);
+            currentPos += 50.0f;
+            Debug.Log("Life Added at: " + lifeIndicator.GetComponent<RectTransform>().anchoredPosition);
+        }
+    }
 
+    // Remove Life
+    void MinusOneLife()
+    {
+        GameObject lifeToBeRemoved = lifeIndicators[statusManager.currentLife];
+        lifeIndicators.RemoveAt(statusManager.currentLife);
+        Destroy(lifeToBeRemoved);
     }
 }
