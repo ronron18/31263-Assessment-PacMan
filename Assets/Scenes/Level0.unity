@@ -2580,6 +2580,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!4 &356035431 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2966937966275908499, guid: 0d78d4523d4d51840922b9f1b877e2a5, type: 3}
+  m_PrefabInstance: {fileID: 2966937966668180558}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &365298075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16010,6 +16015,7 @@ MonoBehaviour:
   - {fileID: 6097229960259701435}
   - {fileID: 1943830363}
   - {fileID: 157427794}
+  - {fileID: 356035431}
   inaccesiblePath:
   - {x: -4.5, y: -7.5, z: 0}
   - {x: 12.5, y: -7.5, z: 0}
@@ -16017,6 +16023,17 @@ MonoBehaviour:
   spawnAreaSize: {x: 7, y: 4, z: 10}
   player: {fileID: 4839231981670655394}
   movementSpeed: 30
+  ghostFourPaths:
+  - {x: -8.5, y: 5.5, z: 0}
+  - {x: 5.5, y: 5.5, z: 0}
+  - {x: 16.5, y: 5.5, z: 0}
+  - {x: 16.5, y: -13.5, z: 0}
+  - {x: 16.5, y: -20.5, z: 0}
+  - {x: 2.5, y: -20.5, z: 0}
+  - {x: -8.5, y: -20.5, z: 0}
+  - {x: -8.5, y: -1.5, z: 0}
+  ghostFourTargetDestination: {x: 0, y: 0, z: 0}
+  destinationIndex: 0
 --- !u!1001 &985085910
 PrefabInstance:
   m_ObjectHideFlags: 0

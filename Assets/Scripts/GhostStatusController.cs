@@ -13,6 +13,7 @@ public class GhostStatusController : MonoBehaviour
     private AudioController audioController;
     public Vector3 previousPosition;
     private GhostsStatusController ghostsController;
+    public Vector3 spawnPoint;
 
     public bool isScared = false;
     public bool isRecovering = false;
@@ -26,6 +27,7 @@ public class GhostStatusController : MonoBehaviour
         audioController = GameObject.FindWithTag("MainGameController").GetComponent<AudioController>();
         ghostsController = GameObject.FindWithTag("MainGameController").GetComponent<GhostsStatusController>();
         previousPosition = transform.position;
+        spawnPoint = transform.position;
     }
 
     // Update is called once per frame

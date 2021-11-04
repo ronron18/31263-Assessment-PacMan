@@ -53,9 +53,15 @@ public class Tweener : MonoBehaviour {
     }
 
     public bool TweenExists(Transform target) {
-        foreach (Tween activeTween in activeTweens) {
-            if (activeTween.Target.transform == target)
-                return true;
+        if(target != null)
+        {
+            foreach (Tween activeTween in activeTweens) {
+                if(activeTween.Target.transform != null)
+                {
+                    if(activeTween.Target.transform == target)
+                        return true;
+                }
+            }
         }
         return false;
     }

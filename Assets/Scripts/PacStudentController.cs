@@ -231,7 +231,7 @@ public class PacStudentController : MonoBehaviour
 
                 case "BonusCherry":
                     playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
-                    Destroy(collider.gameObject);
+                    collider.gameObject.SetActive(false);
                     statusManager.currentScore += 100;
                 break;
 
