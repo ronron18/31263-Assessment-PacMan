@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
 
         if(timeSinceLastEaten != null && statusManager != null)
         {
-            timeSinceLastEaten.fillAmount = Mathf.Clamp(statusManager.timeWithoutEating, 0.0f, 8.0f)/8.0f;
+            timeSinceLastEaten.fillAmount = Mathf.Clamp(statusManager.timeWithoutEating, 0.0f, 4.0f)/4.0f;
         }
     }
 

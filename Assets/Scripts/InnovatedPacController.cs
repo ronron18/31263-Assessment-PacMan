@@ -64,7 +64,7 @@ public class InnovatedPacController : MonoBehaviour
         if(!tweener.TweenExists(transform) && !inTeleporter && !isDead)
             MovePlayer();
         
-        if(statusManager.timeWithoutEating >= 8.0f && !isDead)
+        if(statusManager.timeWithoutEating >= 4.0f && !isDead)
         {
             Death();
         }
