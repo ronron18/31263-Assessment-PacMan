@@ -12,11 +12,11 @@ public class GhostStatusController : MonoBehaviour
     private Collider ghostCollider;
     private AudioController audioController;
     public Vector3 previousPosition;
+    private GhostsStatusController ghostsController;
 
     public bool isScared = false;
     public bool isRecovering = false;
     public bool isDead = false;
-    [SerializeField] private float respawnTimer = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +24,7 @@ public class GhostStatusController : MonoBehaviour
         animator = GetComponent<Animator>();
         ghostCollider = GetComponent<Collider>();
         audioController = GameObject.FindWithTag("MainGameController").GetComponent<AudioController>();
+        ghostsController = GameObject.FindWithTag("MainGameController").GetComponent<GhostsStatusController>();
         previousPosition = transform.position;
     }
 
@@ -33,15 +34,6 @@ public class GhostStatusController : MonoBehaviour
         animator.SetBool("isScared", isScared);
         animator.SetBool("isRecovering", isRecovering);
         animator.SetBool("isDead", isDead);
-
-        if(isDead && respawnTimer > 0.0f)
-        {
-            respawnTimer -= Time.deltaTime;
-        }
-        if(isDead && respawnTimer <= 0.0f)
-        {
-            Respawn();
-        }
     }
 
     public void Death()
@@ -53,13 +45,12 @@ public class GhostStatusController : MonoBehaviour
         audioController.ChangeClip(audioController.oneEatenBGM);
         // TURN OFF COLLIDER!!!
         ghostCollider.enabled = false;
-        respawnTimer = 5.0f;
     }
 
     public void Respawn()
     {
-        isScared = false;
-        isRecovering = false;
+        isScared = ghostsController.inScaredState;
+        isRecovering = ghostsController.inRecoveringState;
         isDead = false;
         ghostCollider.enabled = true;
     }

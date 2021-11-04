@@ -1135,7 +1135,6 @@ MonoBehaviour:
   isScared: 0
   isRecovering: 0
   isDead: 0
-  respawnTimer: 5
 --- !u!65 &157427790
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2098,7 +2097,6 @@ MonoBehaviour:
   isScared: 0
   isRecovering: 0
   isDead: 0
-  respawnTimer: 5
 --- !u!65 &256232031
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2548,7 +2546,6 @@ MonoBehaviour:
   isScared: 0
   isRecovering: 0
   isDead: 0
-  respawnTimer: 5
 --- !u!65 &356035427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15985,6 +15982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaredTimer: 0
+  inRecoveringState: 0
   inScaredState: 0
   ghosts:
   - {fileID: 256232030}
@@ -16007,7 +16005,9 @@ MonoBehaviour:
   - {fileID: 6097229960259701435}
   inaccesiblePath:
   - {x: -4.5, y: -7.5, z: 0}
-  - {x: 11.5, y: -7.5, z: 0}
+  - {x: 12.5, y: -7.5, z: 0}
+  spawnAreaMid: {x: 4, y: -7.5, z: 0}
+  spawnAreaSize: {x: 7, y: 4, z: 10}
   player: {fileID: 4839231981670655394}
   movementSpeed: 30
 --- !u!1001 &985085910
@@ -22338,8 +22338,7 @@ MonoBehaviour:
   previousPosition: {x: 0, y: 0, z: 0}
   isScared: 0
   isRecovering: 0
-  isDead: 0
-  respawnTimer: 5
+  isDead: 1
 --- !u!65 &1943830359
 BoxCollider:
   m_ObjectHideFlags: 0

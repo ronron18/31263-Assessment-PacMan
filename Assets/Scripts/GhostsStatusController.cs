@@ -10,7 +10,7 @@ public class GhostsStatusController : MonoBehaviour
 {
     private AudioController audioController;
     public float scaredTimer = 0.0f;
-    private bool inRecoveringState = false;
+    public bool inRecoveringState = false;
     public bool inScaredState = false;
 
     public GhostStatusController[] ghosts;

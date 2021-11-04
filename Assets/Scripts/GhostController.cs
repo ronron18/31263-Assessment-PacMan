@@ -7,6 +7,9 @@ public class GhostController : MonoBehaviour
 {
     public Transform[] ghosts;
     public Vector3[] inaccesiblePath;
+    public Vector3 spawnAreaMid;
+    public Vector3 spawnAreaSize;
+    private Bounds spawnArea;
     public Transform player;
     public float movementSpeed = 30.0f;
 
@@ -19,12 +22,27 @@ public class GhostController : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         tweener = GameObject.FindWithTag("MainGameController").GetComponent<Tweener>();
         tiles = GameObject.FindWithTag("Tilemap").GetComponent<Tilemap>();
+        spawnArea = new Bounds(spawnAreaMid, spawnAreaSize);
     }
 
     // Update is called once per frame
     void Update()
     {
-        GhostOneSelectTile(ghosts[0]);
+        foreach(Transform ghost in ghosts)
+        {
+            if(spawnArea.Contains(ghost.position) && ghost.GetComponent<GhostStatusController>().isDead)
+            {
+                ghost.GetComponent<GhostStatusController>().Respawn();
+            }
+            else if(spawnArea.Contains(ghost.position) && !ghost.GetComponent<GhostStatusController>().isDead)
+            {
+                GhostLeaveSpawn(ghosts[0]);
+            }
+            else if(!spawnArea.Contains(ghost.position) && !ghost.GetComponent<GhostStatusController>().isDead)
+            {
+                GhostOneSelectTile(ghosts[0]);
+            }
+        }
     }
 
     void MoveGhost(Transform target, Vector3 direction)
@@ -70,6 +88,58 @@ public class GhostController : MonoBehaviour
     }
 
     // GHOST AIS
+    void GhostLeaveSpawn(Transform ghost)
+    {
+        if(!tweener.TweenExists(ghost))
+        {
+            Vector3[] directions = {Vector3.up, Vector3.down, Vector3.left, Vector3.right};
+            Dictionary<Vector3,float> directionalDistance = new Dictionary<Vector3,float>();
+            // Book keeping
+            Vector3 selectedDirection = Vector3.zero;
+            float selectedDistance = Mathf.Infinity;
+
+            for(int i = 0; i < directions.Length; i++)
+            {
+                if(IsWalkable(ghost, directions[i], ghost.GetComponent<GhostStatusController>().previousPosition))
+                {
+                    if(Vector3.Distance((ghost.position + directions[i]), spawnAreaMid + Vector3.up*100) < selectedDistance && 
+                    Vector3.Distance((ghost.position + directions[i]), spawnAreaMid + Vector3.up*100) < Vector3.Distance((ghost.position + directions[i]), spawnAreaMid + Vector3.down*100))
+                    {
+                        directionalDistance.Add(directions[i], Vector3.Distance((ghost.position + directions[i]), spawnAreaMid + Vector3.up*100));
+                    }
+                    else if(Vector3.Distance((ghost.position + directions[i]), spawnAreaMid + Vector3.down*100) < selectedDistance)
+                    {
+                        directionalDistance.Add(directions[i], Vector3.Distance((ghost.position + directions[i]), spawnAreaMid + Vector3.down*100));
+                    }
+                }
+            }
+
+            foreach(KeyValuePair<Vector3, float> directionDistancePairs in directionalDistance)
+            {
+                if(directionDistancePairs.Value < selectedDistance)
+                {
+                    selectedDistance = directionDistancePairs.Value;
+                    selectedDirection = directionDistancePairs.Key;
+                }
+                else if(directionDistancePairs.Value == selectedDistance)
+                {
+                    if(Random.value > 0.5f)
+                    {
+                        selectedDistance = directionDistancePairs.Value;
+                        selectedDirection = directionDistancePairs.Key;
+                    }
+                }
+            }
+
+            if(selectedDirection == Vector3.zero) // IF MUST BACKTRACK
+            {
+                selectedDirection = ghost.GetComponent<GhostStatusController>().previousPosition - ghost.position;
+            }
+            Debug.Log("Leaving spawn: " + ghost.GetComponent<GhostStatusController>().previousPosition);
+            MoveGhost(ghost, selectedDirection);
+        }
+    }
+
     void GhostOneSelectTile(Transform ghost)
     {
         if(!tweener.TweenExists(ghost))
@@ -77,7 +147,7 @@ public class GhostController : MonoBehaviour
             Vector3[] directions = {Vector3.up, Vector3.down, Vector3.left, Vector3.right};
             // Book keeping
             Vector3 selectedDirection = Vector3.zero;
-            float selectedDistance = 0.0f;
+            float selectedDistance = -Mathf.Infinity;
 
             for(int i = 0; i < directions.Length; i++)
             {
@@ -103,7 +173,7 @@ public class GhostController : MonoBehaviour
             {
                 selectedDirection = ghost.GetComponent<GhostStatusController>().previousPosition - ghost.position;
             }
-            Debug.Log(ghost.GetComponent<GhostStatusController>().previousPosition);
+            Debug.Log("Ghost 1: " + ghost.GetComponent<GhostStatusController>().previousPosition);
             MoveGhost(ghost, selectedDirection);
         }
     }
