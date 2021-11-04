@@ -64,6 +64,10 @@ public class InnovatedPacController : MonoBehaviour
         if(!tweener.TweenExists(transform) && !inTeleporter && !isDead)
             MovePlayer();
         
+        if(statusManager.timeWithoutEating >= 8.0f && !isDead)
+        {
+            Death();
+        }
         //Debug.Log("Last Input" + lastInput);
     }
 
@@ -197,6 +201,7 @@ public class InnovatedPacController : MonoBehaviour
 
     void Death()
     {
+        playerAnimator.speed = 1.0f;
         isDead = true;
         lastInput = KeyCode.None;
         currentInput = KeyCode.None;
@@ -208,6 +213,7 @@ public class InnovatedPacController : MonoBehaviour
 
     void Respawn()
     {
+        statusManager.timeWithoutEating = 0.0f;
         isDead = false;
         transform.position = respawnPoint;
         moveTargetPosition = transform.position;
@@ -227,18 +233,21 @@ public class InnovatedPacController : MonoBehaviour
                     playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
                     collider.gameObject.SetActive(false);
                     statusManager.currentScore += 10;
+                    statusManager.timeWithoutEating = 0.0f;
                 break;
 
                 case "BonusCherry":
                     playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
                     collider.gameObject.SetActive(false);
                     statusManager.currentScore += 100;
+                    statusManager.timeWithoutEating = 0.0f;
                 break;
 
                 case "PowerUp":
                     // Change ghost animator to scared
                     ghosts.SetScared();
                     collider.gameObject.SetActive(false);
+                    statusManager.timeWithoutEating = 0.0f;
                 break;
 
                 case "Ghost":
@@ -247,6 +256,7 @@ public class InnovatedPacController : MonoBehaviour
                         // IF THE GHOST IS SCARED
                         collider.gameObject.GetComponent<GhostStatusController>().Death();
                         statusManager.currentScore += 300;
+                        statusManager.timeWithoutEating = 0.0f;
                     }
                     else
                     {

@@ -27,6 +27,7 @@ TagManager:
   - Countdown
   - HighScoreText
   - BestTimeText
+  - TimeSinceLastEaten
   layers:
   - Default
   - TransparentFX

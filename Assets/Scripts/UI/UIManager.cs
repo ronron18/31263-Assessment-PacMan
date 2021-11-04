@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     public Text bestTime;
     public Tweener tweener;
 
-    // LevelOne
+    // LevelOne and Two
     public Text scoreText;
     public Text timeText;
     public RectTransform ghostScaredStatus;
@@ -39,6 +39,9 @@ public class UIManager : MonoBehaviour
     public GameObject lifeIndicatorPrefab;
     public Text countdown;
     private bool gameOverCalled = false; // Prevents coroutine from being called multiple times >:(((((
+
+    // LevelTwo
+    public Image timeSinceLastEaten;
 
     private float currentTitleHue = 0.0f;
     private const float menuRatio = 800.0f/1920;
@@ -114,6 +117,11 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+
+        if(timeSinceLastEaten != null && statusManager != null)
+        {
+            timeSinceLastEaten.fillAmount = Mathf.Clamp(statusManager.timeWithoutEating, 0.0f, 8.0f)/8.0f;
+        }
     }
 
     // Cycles through colors for title and subtitle
@@ -139,7 +147,7 @@ public class UIManager : MonoBehaviour
         loadingPanel.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         menuBox.transform.Find("Level 1 Button").GetComponent<Button>().onClick.AddListener(LoadFirstLevel);
-        //menuBox.transform.Find("Level 2 Button").GetComponent<Button>().onClick.AddListener(LoadSecondLevel);
+        menuBox.transform.Find("Level 2 Button").GetComponent<Button>().onClick.AddListener(LoadSecondLevel);
         menuBox.transform.Find("Exit Button").GetComponent<Button>().onClick.AddListener(ExitGame);
         
         int bestScoreValue = PlayerPrefs.GetInt("BestScore", 0);
@@ -163,6 +171,11 @@ public class UIManager : MonoBehaviour
         statusManager = GameObject.FindWithTag("MainGameController").GetComponent<StatusManager>();
         InitiateLifeIndicator();
         StartCoroutine(StartLevelCountdown());
+    }
+
+     private void InitializeLevelTwo() {
+        timeSinceLastEaten = GameObject.FindWithTag("TimeSinceLastEaten").GetComponent<Image>();
+        InitializeLevelOne();
     }
 
     public void ExitGame() {
@@ -211,6 +224,13 @@ public class UIManager : MonoBehaviour
         StartCoroutine(LoadLevelCoroutine((int)GameScenes.LevelOne));
     }
 
+    public void LoadSecondLevel() {
+        menuBox.transform.Find("Level 1 Button").GetComponent<Button>().interactable = false;
+        menuBox.transform.Find("Level 2 Button").GetComponent<Button>().interactable = false;
+        menuBox.transform.Find("Exit Button").GetComponent<Button>().interactable = false;
+        StartCoroutine(LoadLevelCoroutine((int)GameScenes.LevelTwo));
+    }
+
     public void LoadMainMenu() {
         GameObject.FindWithTag("GameExitButton").GetComponent<Button>().interactable = false;
         StartCoroutine(LoadLevelCoroutine((int)GameScenes.MainMenu));
@@ -230,6 +250,7 @@ public class UIManager : MonoBehaviour
                 break;
 
             case (int)GameScenes.LevelTwo:
+                InitializeLevelTwo();
                 Debug.Log("Second Level Loaded");
                 break;
         }

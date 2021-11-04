@@ -197,6 +197,7 @@ public class PacStudentController : MonoBehaviour
 
     void Death()
     {
+        playerAnimator.speed = 1.0f;
         isDead = true;
         lastInput = KeyCode.None;
         currentInput = KeyCode.None;

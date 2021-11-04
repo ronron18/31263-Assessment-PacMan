@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class StatusManager : MonoBehaviour
 {
-
-
+    public bool innovated = false;
     public int currentScore;
     public float currentTime;
     public int currentLife = 3;
     public bool gameOver = false;
     public bool gameStarted = false;
+
+    // if innovated true
+    public float timeWithoutEating = 0.0f;
 
     void Start()
     {
@@ -18,12 +20,6 @@ public class StatusManager : MonoBehaviour
     }
     void Update()
     {
-        if(!gameStarted)    // Initialize score and time
-        {
-            currentScore = 0;
-            currentTime = 0.0f;
-        }
-
         if((currentLife <= 0 || GameObject.FindWithTag("Pellet") == null) && !gameOver) // If Pellet not found or no lives left
         {
             // game over
@@ -32,6 +28,20 @@ public class StatusManager : MonoBehaviour
             SaveHighScore();
         }
         if(!gameOver) currentTime += Time.deltaTime;
+
+        if(innovated) InnovatedUpdate();
+
+        if(!gameStarted)    // Initialize score and time
+        {
+            currentScore = 0;
+            currentTime = 0.0f;
+            gameStarted = true;
+        }
+    }
+
+    void InnovatedUpdate()
+    {
+        timeWithoutEating += Time.deltaTime;
     }
 
     void SaveHighScore()
