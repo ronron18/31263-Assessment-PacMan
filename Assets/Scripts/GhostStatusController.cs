@@ -11,6 +11,7 @@ public class GhostStatusController : MonoBehaviour
     private Animator animator;
     private Collider ghostCollider;
     private AudioController audioController;
+    public Vector3 previousPosition;
 
     public bool isScared = false;
     public bool isRecovering = false;
@@ -23,6 +24,7 @@ public class GhostStatusController : MonoBehaviour
         animator = GetComponent<Animator>();
         ghostCollider = GetComponent<Collider>();
         audioController = GameObject.FindWithTag("MainGameController").GetComponent<AudioController>();
+        previousPosition = transform.position;
     }
 
     // Update is called once per frame

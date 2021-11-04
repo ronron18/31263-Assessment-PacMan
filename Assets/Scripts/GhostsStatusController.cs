@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
-    This script manages all ghosts at once. Ghost movement is managed here.
+    This script manages all ghosts at once. 
 */
 
 public class GhostsStatusController : MonoBehaviour
@@ -88,11 +88,5 @@ public class GhostsStatusController : MonoBehaviour
 
         // Change Audio Clip
         audioController.ChangeClip(audioController.normalBGM);
-    }
-
-    // Ghost Movement
-    void TweenGhosts()
-    {
-
     }
 }
