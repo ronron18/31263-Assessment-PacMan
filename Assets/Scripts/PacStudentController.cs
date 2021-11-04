@@ -5,14 +5,16 @@ using UnityEngine.Tilemaps;
 
 public class PacStudentController : MonoBehaviour
 {
-    private Tweener tweener;
-    private GameObject player;
     private AudioSource playerAudioSource;
     private ParticleSystem playerParticleSystem;
     private Animator playerAnimator;
     private Tilemap tiles;
     [SerializeField] private GameObject bumpParticleGameObject;
-    private ScoreManager scoreManager;
+
+    // Game Manager components
+    private ScoreManager scoreManager;                  // Allows score to be calculated
+    private GhostsController ghosts;                    // Allows the change in ghost's state when power up is consumed
+    private Tweener tweener;                            // Allows player movement
 
     public AudioClip[] audioClips;
     private enum AudioClips
@@ -30,14 +32,16 @@ public class PacStudentController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //tweener = GameObject.FindWithTag("Manager").GetComponent<Tweener>();
         tiles = GameObject.FindWithTag("Tilemap").GetComponent<Tilemap>();
+
         tweener = GameObject.FindWithTag("MainGameController").GetComponent<Tweener>();
+        scoreManager = GameObject.FindWithTag("MainGameController").GetComponent<ScoreManager>();
+        ghosts = GameObject.FindWithTag("MainGameController").GetComponent<GhostsController>();
+
         playerAudioSource = GetComponent<AudioSource>();
         playerAnimator = GetComponent<Animator>();
         playerParticleSystem = transform.Find("Walk Particles").GetComponent<ParticleSystem>();
         moveTargetPosition = transform.position;
-        scoreManager = GameObject.FindWithTag("MainGameController").GetComponent<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -200,6 +204,12 @@ public class PacStudentController : MonoBehaviour
                 playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
                 Destroy(collider.gameObject);
                 scoreManager.currentScore += 100;
+            break;
+
+            case "PowerUp":
+                // Change ghost animator to scared
+                ghosts.SetScared();
+                Destroy(collider.gameObject);
             break;
         }
         Debug.Log("Triggered!");

@@ -28,7 +28,13 @@ public class UIManager : MonoBehaviour
     // LevelOne
     public Text scoreText;
     public Text timeText;
+    public RectTransform ghostScaredStatus;
+    public Text ghostScaredTimer;
+    public RectTransform[] lifeIndicators;
     public ScoreManager scoreManager;
+    public GhostsController ghostsController;
+    public bool ghostScaredUIShown;
+    public RectTransform lifeIndicatorPrefab;
 
     private float currentTitleHue = 0.0f;
     private const float menuRatio = 800.0f/1920;
@@ -53,6 +59,26 @@ public class UIManager : MonoBehaviour
         if(titleText != null && subtitleText != null) CycleColors();  // Cycle through colors for title and subtitle
 
         if(scoreText != null && scoreManager != null) scoreText.text = scoreManager.currentScore.ToString();
+        if(ghostsController != null && ghostScaredStatus != null)
+        {
+            if(ghostsController.inScaredState)
+            {
+                if(!ghostScaredUIShown) 
+                {
+                    ghostScaredUIShown = true;
+                    StartCoroutine(LerpUIElement(ghostScaredStatus, new Vector2(0.0f, ghostScaredStatus.anchoredPosition.y), 0.5f, Easings.Easing.so));
+                }
+                ghostScaredTimer.text = Mathf.Ceil(ghostsController.scaredTimer).ToString() + "s";
+            }
+            else
+            {
+                if(ghostScaredUIShown)
+                {
+                    ghostScaredUIShown = false;
+                    StartCoroutine(LerpUIElement(ghostScaredStatus, new Vector2(ghostScaredStatus.anchoredPosition.x-120.0f, ghostScaredStatus.anchoredPosition.y), 0.5f, Easings.Easing.so));
+                }
+            }
+        }
     }
 
     // Cycles through colors for title and subtitle
@@ -80,7 +106,12 @@ public class UIManager : MonoBehaviour
         GameObject.FindWithTag("GameExitButton").GetComponent<Button>().onClick.AddListener(LoadMainMenu);
         scoreText = GameObject.FindWithTag("ScoreText").GetComponent<Text>();
         timeText = GameObject.FindWithTag("TimeText").GetComponent<Text>();
+        ghostScaredStatus = GameObject.FindWithTag("GhostScaredStatus").GetComponent<RectTransform>();
+        ghostsController = GameObject.FindWithTag("MainGameController").GetComponent<GhostsController>();
+        ghostScaredTimer = ghostScaredStatus.transform.Find("ScaredStateTimer").GetComponent<Text>();
+        ghostScaredUIShown = false;
         scoreManager = GameObject.FindWithTag("MainGameController").GetComponent<ScoreManager>();
+        InitiateLifeIndicator();
     }
 
     public void ExitGame() {
@@ -207,5 +238,14 @@ public class UIManager : MonoBehaviour
 
         yield return null;
         uiElement.anchoredPosition = targetPos;
+    }
+
+    /*
+        All the smaller stuff
+    */
+    // Initiates life indicators
+    void InitiateLifeIndicator()
+    {
+
     }
 }

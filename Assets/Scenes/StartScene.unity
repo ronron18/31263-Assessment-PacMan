@@ -2021,6 +2021,15 @@ MonoBehaviour:
   menuBox: {fileID: 0}
   loadingPanel: {fileID: 0}
   tweener: {fileID: 0}
+  scoreText: {fileID: 0}
+  timeText: {fileID: 0}
+  ghostScaredStatus: {fileID: 0}
+  ghostScaredTimer: {fileID: 0}
+  lifeIndicators: []
+  scoreManager: {fileID: 0}
+  ghostsController: {fileID: 0}
+  ghostScaredUIShown: 0
+  lifeIndicatorPrefab: {fileID: 8218762869612754430, guid: 444da6d7bd1ddee42801a04b7f13eb48, type: 3}
 --- !u!114 &1649219693
 MonoBehaviour:
   m_ObjectHideFlags: 0

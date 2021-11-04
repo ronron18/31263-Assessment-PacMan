@@ -19,6 +19,9 @@ TagManager:
   - ScoreText
   - TimeText
   - BonusCherry
+  - PowerUp
+  - GhostScaredStatus
+  - LifeIndicators
   layers:
   - Default
   - TransparentFX
