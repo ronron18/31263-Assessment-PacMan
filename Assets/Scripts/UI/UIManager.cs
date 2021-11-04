@@ -23,6 +23,8 @@ public class UIManager : MonoBehaviour
     public Text subtitleText;
     public RectTransform menuBox;
     public RectTransform loadingPanel;
+    public Text bestScore;
+    public Text bestTime;
     public Tweener tweener;
 
     // LevelOne
@@ -32,9 +34,11 @@ public class UIManager : MonoBehaviour
     public Text ghostScaredTimer;
     public List<GameObject> lifeIndicators;
     public StatusManager statusManager;
-    public GhostsController ghostsController;
+    public GhostsStatusController ghostsStatusController;
     public bool ghostScaredUIShown;
     public GameObject lifeIndicatorPrefab;
+    public Text countdown;
+    private bool gameOverCalled = false; // Prevents coroutine from being called multiple times >:(((((
 
     private float currentTitleHue = 0.0f;
     private const float menuRatio = 800.0f/1920;
@@ -42,9 +46,23 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        // Remove new manager if one is already present
+        GameObject[] managers = GameObject.FindGameObjectsWithTag("Manager");
+        if(managers.Length > 1)
+        {
+            foreach(GameObject manager in managers)
+            {
+                if(manager == gameObject)
+                {
+                    Destroy(manager);
+                    Debug.Log("NEW MANAGER DESTROYED");
+                    return;
+                }
+                    
+            }
+        }
+        Debug.Log("Manager count: " + managers.Length);
         DontDestroyOnLoad(gameObject);
-
-        tweener = GetComponent<Tweener>();
         InitializeMainMenu();
         HideLoadingScreenInstant();
     }
@@ -60,24 +78,29 @@ public class UIManager : MonoBehaviour
 
         if(scoreText != null && statusManager != null) scoreText.text = statusManager.currentScore.ToString();
 
-        if(statusManager != null && lifeIndicators != null)
+        if(statusManager != null)
         {
-            if(statusManager.currentLife < lifeIndicators.Count)
+            if(lifeIndicators != null && statusManager.currentLife < lifeIndicators.Count)
             {
                 MinusOneLife();
             }
+            if(statusManager.gameOver && gameOverCalled == false)
+            {
+                gameOverCalled = true;
+                StartCoroutine(GameOverCoroutine());
+            }
         }
 
-        if(ghostsController != null && ghostScaredStatus != null)
+        if(ghostsStatusController != null && ghostScaredStatus != null)
         {
-            if(ghostsController.inScaredState)
+            if(ghostsStatusController.inScaredState)
             {
                 if(!ghostScaredUIShown) 
                 {
                     ghostScaredUIShown = true;
                     StartCoroutine(LerpUIElement(ghostScaredStatus, new Vector2(0.0f, ghostScaredStatus.anchoredPosition.y), 0.5f, Easings.Easing.so));
                 }
-                ghostScaredTimer.text = Mathf.Ceil(ghostsController.scaredTimer).ToString() + "s";
+                ghostScaredTimer.text = Mathf.Ceil(ghostsStatusController.scaredTimer).ToString() + "s";
             }
             else
             {
@@ -102,25 +125,41 @@ public class UIManager : MonoBehaviour
         Menu UI Initialization and Game Termination.
     */
     private void InitializeMainMenu() {
+        tweener = GetComponent<Tweener>();
         menuBox = GameObject.FindWithTag("MenuBox").GetComponent<RectTransform>();
         loadingPanel = gameObject.transform.Find("LoadingCanvas").Find("Panel").GetComponent<RectTransform>();
         titleText = GameObject.FindWithTag("TitleText").GetComponent<Text>();
         subtitleText = GameObject.FindWithTag("SubtitleText").GetComponent<Text>();
+        bestScore = GameObject.FindWithTag("HighScoreText").GetComponent<Text>();
+        bestTime = GameObject.FindWithTag("BestTimeText").GetComponent<Text>();
         menuBox.anchoredPosition = new Vector2(-menuRatio * Screen.width, menuBox.anchoredPosition.y);
         loadingPanel.sizeDelta = new Vector2(Screen.width, Screen.height);
+
+        menuBox.transform.Find("Level 1 Button").GetComponent<Button>().onClick.AddListener(LoadFirstLevel);
+        //menuBox.transform.Find("Level 2 Button").GetComponent<Button>().onClick.AddListener(LoadSecondLevel);
+        menuBox.transform.Find("Exit Button").GetComponent<Button>().onClick.AddListener(ExitGame);
+        
+        int bestScoreValue = PlayerPrefs.GetInt("BestScore", 0);
+        float bestTimeValue = PlayerPrefs.GetFloat("BestTime", 0.0f);
+        bestScore.text = "High Score: " + bestScoreValue;
+        bestTime.text = "Best Time: " + (int)(bestTimeValue/60) + ":" + (int)(bestTimeValue % 60) + ":" + (int)((bestTimeValue%1)*10);
+
+        Debug.Log("Main menu initialized");
         ShowMenu();
     }
 
     private void InitializeLevelOne() {
-        GameObject.FindWithTag("GameExitButton").GetComponent<Button>().onClick.AddListener(LoadMainMenu);
+        Debug.Log("Initializing level one");
         scoreText = GameObject.FindWithTag("ScoreText").GetComponent<Text>();
         timeText = GameObject.FindWithTag("TimeText").GetComponent<Text>();
         ghostScaredStatus = GameObject.FindWithTag("GhostScaredStatus").GetComponent<RectTransform>();
-        ghostsController = GameObject.FindWithTag("MainGameController").GetComponent<GhostsController>();
+        ghostsStatusController = GameObject.FindWithTag("MainGameController").GetComponent<GhostsStatusController>();
         ghostScaredTimer = ghostScaredStatus.transform.Find("ScaredStateTimer").GetComponent<Text>();
+        countdown = GameObject.FindWithTag("Countdown").GetComponent<Text>();
         ghostScaredUIShown = false;
         statusManager = GameObject.FindWithTag("MainGameController").GetComponent<StatusManager>();
         InitiateLifeIndicator();
+        StartCoroutine(StartLevelCountdown());
     }
 
     public void ExitGame() {
@@ -154,7 +193,7 @@ public class UIManager : MonoBehaviour
 
     public void HideLoadingScreenInstant() {
         if(loadingPanel != null)
-            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 0.01f, Easings.Easing.s));
+            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 0.0f, Easings.Easing.s));
     }
 
     /*
@@ -178,6 +217,7 @@ public class UIManager : MonoBehaviour
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         switch(scene.buildIndex) {
             case (int)GameScenes.MainMenu:
+                InitializeMainMenu();
                 Debug.Log("Main Menu Loaded");
                 break;
 
@@ -199,7 +239,6 @@ public class UIManager : MonoBehaviour
     public void DoStuffAfterLevelIsLoaded(int level) {
         switch(level) {
             case (int)GameScenes.MainMenu:
-                Destroy(gameObject);
                 Debug.Log("Main Menu Loaded2");
                 break;
 
@@ -224,11 +263,32 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1); 
         AsyncOperation loadScene = SceneManager.LoadSceneAsync(level); // Load Scene async
+        Debug.Log("Loading level: " + level);
         SceneManager.sceneLoaded += OnSceneLoaded;
         while(!loadScene.isDone) 
             yield return null;
-        HideLoadingScreen();
+        SceneManager.sceneLoaded -= OnSceneLoaded;  // Prevent some stupid error i spent two hours debugging >:(((
+        if(level != (int)GameScenes.MainMenu)
+            HideLoadingScreenInstant();
+        else
+            HideLoadingScreen();
         DoStuffAfterLevelIsLoaded(level);
+    }
+
+    // Coroutine for start level countdown
+    public IEnumerator StartLevelCountdown() {
+        Time.timeScale = 0.0f; // Pauses the game
+        countdown.text = "3";
+        yield return new WaitForSecondsRealtime(1); 
+        countdown.text = "2";
+        yield return new WaitForSecondsRealtime(1); 
+        countdown.text = "1";
+        yield return new WaitForSecondsRealtime(1); 
+        countdown.text = "GO!";
+        yield return new WaitForSecondsRealtime(1); 
+        countdown.text = "";
+        Time.timeScale = 1.0f;
+        GameObject.FindWithTag("GameExitButton").GetComponent<Button>().onClick.AddListener(LoadMainMenu);
     }
 
     // Coroutine to lerp a UI element because i won't bother making another tweener/tween class for RectTransforms >:(
@@ -236,7 +296,7 @@ public class UIManager : MonoBehaviour
     {
         Vector2 startingPos = uiElement.anchoredPosition;
         float currentTime = 0.0f;
-        while (currentTime < duration)
+        while (currentTime < duration && uiElement != null)
         {
             float timeFraction = currentTime/duration;
             timeFraction = Easings.CalculateTimeFraction(timeFraction, ease);
@@ -247,6 +307,17 @@ public class UIManager : MonoBehaviour
 
         yield return null;
         uiElement.anchoredPosition = targetPos;
+    }
+
+    // GameOver coroutine
+    private IEnumerator GameOverCoroutine()
+    {
+        Time.timeScale = 0.0f;
+        countdown.text = "GAME OVER";
+        GameObject.FindWithTag("GameExitButton").GetComponent<Button>().interactable = false;
+        yield return new WaitForSecondsRealtime(3);
+        Time.timeScale = 1.0f;
+        StartCoroutine(LoadLevelCoroutine((int)GameScenes.MainMenu));
     }
 
     /*

@@ -13,7 +13,7 @@ public class PacStudentController : MonoBehaviour
 
     // Game Manager components
     private StatusManager statusManager;                  // Allows score to be calculated
-    private GhostsController ghosts;                    // Allows the change in ghost's state when power up is consumed
+    private GhostsStatusController ghosts;                    // Allows the change in ghost's state when power up is consumed
     private Tweener tweener;                            // Allows player movement
 
     public AudioClip[] audioClips;
@@ -39,7 +39,7 @@ public class PacStudentController : MonoBehaviour
 
         tweener = GameObject.FindWithTag("MainGameController").GetComponent<Tweener>();
         statusManager = GameObject.FindWithTag("MainGameController").GetComponent<StatusManager>();
-        ghosts = GameObject.FindWithTag("MainGameController").GetComponent<GhostsController>();
+        ghosts = GameObject.FindWithTag("MainGameController").GetComponent<GhostsStatusController>();
 
         playerAudioSource = GetComponent<AudioSource>();
         playerAnimator = GetComponent<Animator>();
@@ -242,9 +242,11 @@ public class PacStudentController : MonoBehaviour
                 break;
 
                 case "Ghost":
-                    if(collider.gameObject.GetComponent<GhostController>().isScared)
+                    if(collider.gameObject.GetComponent<GhostStatusController>().isScared)
                     {
                         // IF THE GHOST IS SCARED
+                        collider.gameObject.GetComponent<GhostStatusController>().Death();
+                        statusManager.currentScore += 300;
                     }
                     else
                     {

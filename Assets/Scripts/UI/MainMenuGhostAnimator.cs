@@ -20,7 +20,7 @@ public class MainMenuGhostAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //tweener = GameObject.FindWithTag("Manager").GetComponent<Tweener>();
+        tweener = GameObject.FindWithTag("Manager").GetComponent<Tweener>();
         animDirections = new int[] {0,2,1,2}; // Direction sequence for ghost animation
         positions = new Vector3[4];
         positions[0] = new Vector3(5.0f, 3.0f, 0.0f);

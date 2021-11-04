@@ -24,6 +24,9 @@ TagManager:
   - LifeIndicators
   - HUD
   - Ghost
+  - Countdown
+  - HighScoreText
+  - BestTimeText
   layers:
   - Default
   - TransparentFX

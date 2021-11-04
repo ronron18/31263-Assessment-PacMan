@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 19631867}
   m_Layer: 5
   m_Name: High Score
-  m_TagString: Untagged
+  m_TagString: HighScoreText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 672835488}
   m_Layer: 5
   m_Name: Best Time
-  m_TagString: Untagged
+  m_TagString: BestTimeText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1285,19 +1285,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1142793142}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1649219692}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
-        m_MethodName: ExitGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1142793142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1600,19 +1588,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1388440929}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1649219692}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
-        m_MethodName: LoadFirstLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1388440929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2020,6 +1996,8 @@ MonoBehaviour:
   subtitleText: {fileID: 0}
   menuBox: {fileID: 0}
   loadingPanel: {fileID: 0}
+  bestScore: {fileID: 0}
+  bestTime: {fileID: 0}
   tweener: {fileID: 0}
   scoreText: {fileID: 0}
   timeText: {fileID: 0}
@@ -2027,9 +2005,10 @@ MonoBehaviour:
   ghostScaredTimer: {fileID: 0}
   lifeIndicators: []
   statusManager: {fileID: 0}
-  ghostsController: {fileID: 0}
+  ghostsStatusController: {fileID: 0}
   ghostScaredUIShown: 0
   lifeIndicatorPrefab: {fileID: 8218762869612754429, guid: 444da6d7bd1ddee42801a04b7f13eb48, type: 3}
+  countdown: {fileID: 0}
 --- !u!114 &1649219693
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,14 +6,14 @@ using UnityEngine;
     This script manages all ghosts at once. Ghost movement is managed here.
 */
 
-public class GhostsController : MonoBehaviour
+public class GhostsStatusController : MonoBehaviour
 {
     private AudioController audioController;
     public float scaredTimer = 0.0f;
     private bool inRecoveringState = false;
     public bool inScaredState = false;
 
-    public GhostController[] ghosts;
+    public GhostStatusController[] ghosts;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +51,7 @@ public class GhostsController : MonoBehaviour
         audioController.ChangeClip(audioController.scaredBGM);
 
         // Set all ghosts to scared
-        foreach(GhostController ghost in ghosts)
+        foreach(GhostStatusController ghost in ghosts)
         {
             ghost.isScared = true;
         }
@@ -63,10 +63,10 @@ public class GhostsController : MonoBehaviour
     // Change ghost to recovering state
     void SetRecovering()
     {
-        // Set each and every ghost's state to recovering if still scared
-        foreach(GhostController ghost in ghosts)
+        // Set each and every ghost's state to recovering if still scared and not dead
+        foreach(GhostStatusController ghost in ghosts)
         {
-            if(ghost.isScared)
+            if(ghost.isScared && !ghost.isDead)
                 ghost.isRecovering = true;
         }
     }
@@ -77,7 +77,7 @@ public class GhostsController : MonoBehaviour
         inScaredState = false;
         inRecoveringState = false;
         // Set each and every ghost's state to normal
-        foreach(GhostController ghost in ghosts)
+        foreach(GhostStatusController ghost in ghosts)
         {
             if(!ghost.isDead)
             {

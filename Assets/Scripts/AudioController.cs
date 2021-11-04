@@ -32,8 +32,11 @@ public class AudioController : MonoBehaviour
 
     public void ChangeClip(AudioClip clip)
     {
-        audioSource.Stop();
-        audioSource.clip = clip;
-        audioSource.Play();
+        if(audioSource.clip != clip)
+        {
+            audioSource.Stop();
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
     }
 }
