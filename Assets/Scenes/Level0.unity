@@ -1164,6 +1164,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!4 &157427794 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5799813614631173698, guid: df7907e54ef090c42b7ade5513e086f5, type: 3}
+  m_PrefabInstance: {fileID: 5799813613581776784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &165798513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16003,6 +16008,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghosts:
   - {fileID: 6097229960259701435}
+  - {fileID: 1943830363}
+  - {fileID: 157427794}
   inaccesiblePath:
   - {x: -4.5, y: -7.5, z: 0}
   - {x: 12.5, y: -7.5, z: 0}
@@ -22368,6 +22375,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!4 &1943830363 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4513801204409036982, guid: a1306f7c7f3872549bf0ff88d0585702, type: 3}
+  m_PrefabInstance: {fileID: 4513801203658121066}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1944924307
 PrefabInstance:
   m_ObjectHideFlags: 0

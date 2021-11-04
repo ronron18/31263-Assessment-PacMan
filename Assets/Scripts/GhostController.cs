@@ -51,6 +51,7 @@ public class GhostController : MonoBehaviour
                     break;
                 
                     case 2:
+                        GhostThreeSelectTile(ghosts[i]);
                     break;
 
                     case 3:
@@ -227,6 +228,34 @@ public class GhostController : MonoBehaviour
                 selectedDirection = ghost.GetComponent<GhostStatusController>().previousPosition - ghost.position;
             }
             Debug.Log("Ghost 2: " + ghost.GetComponent<GhostStatusController>().previousPosition);
+            MoveGhost(ghost, selectedDirection);
+        }
+    }
+
+    void GhostThreeSelectTile(Transform ghost)
+    {
+        if(!tweener.TweenExists(ghost))
+        {
+            Vector3[] directions = {Vector3.up, Vector3.down, Vector3.left, Vector3.right};
+            List<Vector3> validDirections = new List<Vector3>();
+            // Book keeping
+            Vector3 selectedDirection = Vector3.zero;
+
+            for(int i = 0; i < directions.Length; i++)
+            {
+                if(IsWalkable(ghost, directions[i], ghost.GetComponent<GhostStatusController>().previousPosition) && !spawnArea.Contains(ghost.position + directions[i]))
+                {
+                    validDirections.Add(directions[i]);
+                }
+            }
+
+            selectedDirection = validDirections[Random.Range(0, validDirections.Count)];
+
+            if(selectedDirection == Vector3.zero) // IF MUST BACKTRACK
+            {
+                selectedDirection = ghost.GetComponent<GhostStatusController>().previousPosition - ghost.position;
+            }
+            Debug.Log("Ghost 3: " + ghost.GetComponent<GhostStatusController>().previousPosition);
             MoveGhost(ghost, selectedDirection);
         }
     }
