@@ -1132,6 +1132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousPosition: {x: 0, y: 0, z: 0}
+  spawnPoint: {x: 0, y: 0, z: 0}
   isScared: 0
   isRecovering: 0
   isDead: 0
@@ -2099,6 +2100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousPosition: {x: 0, y: 0, z: 0}
+  spawnPoint: {x: 0, y: 0, z: 0}
   isScared: 0
   isRecovering: 0
   isDead: 0
@@ -2548,6 +2550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousPosition: {x: 0, y: 0, z: 0}
+  spawnPoint: {x: 0, y: 0, z: 0}
   isScared: 0
   isRecovering: 0
   isDead: 0
@@ -15876,7 +15879,6 @@ GameObject:
   m_Component:
   - component: {fileID: 984299074}
   - component: {fileID: 984299076}
-  - component: {fileID: 984299075}
   - component: {fileID: 984299078}
   - component: {fileID: 984299077}
   - component: {fileID: 984299079}
@@ -15903,21 +15905,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &984299075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984299073}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa0cf5471017bb43904678857630172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  positions: []
-  direction: 1
-  player: {fileID: 1010083513}
 --- !u!114 &984299076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16352,7 +16339,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 19fe7da1d88ca9b44aa28c8777ca127e, type: 3}
   - {fileID: 8300000, guid: f0a2ac87d2eff0040ba02e25f9e558ce, type: 3}
   - {fileID: 8300000, guid: 67e798be691710344b8fade053572aa1, type: 3}
-  movementSpeed: 90
+  movementSpeed: 30
 --- !u!1001 &1040334007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22360,6 +22347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousPosition: {x: 0, y: 0, z: 0}
+  spawnPoint: {x: 0, y: 0, z: 0}
   isScared: 0
   isRecovering: 0
   isDead: 1

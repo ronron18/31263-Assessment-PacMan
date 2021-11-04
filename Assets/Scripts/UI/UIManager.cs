@@ -186,12 +186,12 @@ public class UIManager : MonoBehaviour
     // Show/Hide Loading Screen
     public void ShowLoadingScreen() {
         if(loadingPanel != null)
-            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(0.0f, 0.0f), 1.0f, Easings.Easing.so));
+            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(0.0f, 0.0f), 0.25f, Easings.Easing.so));
     }
 
     public void HideLoadingScreen() {
         if(loadingPanel != null)
-            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 1.0f, Easings.Easing.so));
+            StartCoroutine(LerpUIElement(loadingPanel, new Vector2(Screen.width, 0.0f), 0.25f, Easings.Easing.so));
     }
 
     public void HideLoadingScreenInstant() {
