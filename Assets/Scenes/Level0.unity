@@ -1142,11 +1142,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157427788}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &157427791
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157427788}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!1001 &165798513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2087,11 +2103,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256232029}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &256232032
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256232029}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!1001 &258649630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2519,11 +2551,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356035425}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &356035428
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356035425}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!1001 &365298075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16174,7 +16222,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &1010083517
 MonoBehaviour:
@@ -22210,11 +22258,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943830357}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1943830360
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943830357}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 8
+  m_CollisionDetection: 0
 --- !u!1001 &1944924307
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23896,7 +23960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2966937966275908499, guid: 0d78d4523d4d51840922b9f1b877e2a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 2966937966275908499, guid: 0d78d4523d4d51840922b9f1b877e2a5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -23937,6 +24001,10 @@ PrefabInstance:
     - target: {fileID: 2966937966275908501, guid: 0d78d4523d4d51840922b9f1b877e2a5, type: 3}
       propertyPath: m_Name
       value: Orange Ghostn't
+      objectReference: {fileID: 0}
+    - target: {fileID: 2966937966275908501, guid: 0d78d4523d4d51840922b9f1b877e2a5, type: 3}
+      propertyPath: m_TagString
+      value: Ghost
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1508650571, guid: 0d78d4523d4d51840922b9f1b877e2a5, type: 3}
@@ -24029,13 +24097,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Violet Ghostn't
       objectReference: {fileID: 0}
+    - target: {fileID: 4513801204409036976, guid: a1306f7c7f3872549bf0ff88d0585702, type: 3}
+      propertyPath: m_TagString
+      value: Ghost
+      objectReference: {fileID: 0}
     - target: {fileID: 4513801204409036982, guid: a1306f7c7f3872549bf0ff88d0585702, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4513801204409036982, guid: a1306f7c7f3872549bf0ff88d0585702, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4513801204409036982, guid: a1306f7c7f3872549bf0ff88d0585702, type: 3}
       propertyPath: m_LocalPosition.y
@@ -24168,6 +24240,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Green Ghostn't
       objectReference: {fileID: 0}
+    - target: {fileID: 5799813614631173696, guid: df7907e54ef090c42b7ade5513e086f5, type: 3}
+      propertyPath: m_TagString
+      value: Ghost
+      objectReference: {fileID: 0}
     - target: {fileID: 5799813614631173698, guid: df7907e54ef090c42b7ade5513e086f5, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -24273,6 +24349,10 @@ PrefabInstance:
     - target: {fileID: 6097229961004379957, guid: 05cb44fc90710904b833379f0da21b39, type: 3}
       propertyPath: m_Name
       value: Blue Ghostn't
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097229961004379957, guid: 05cb44fc90710904b833379f0da21b39, type: 3}
+      propertyPath: m_TagString
+      value: Ghost
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1133872588, guid: 05cb44fc90710904b833379f0da21b39, type: 3}

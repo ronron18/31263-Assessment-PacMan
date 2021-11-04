@@ -29,6 +29,9 @@ public class PacStudentController : MonoBehaviour
     private bool wallHit = false;   // Checks if object have hit a wall
     private bool inTeleporter = false; // Checks if the player is in a teleporter
 
+    private bool isDead = false;
+    private Vector2 respawnPoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,8 @@ public class PacStudentController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerParticleSystem = transform.Find("Walk Particles").GetComponent<ParticleSystem>();
         moveTargetPosition = transform.position;
+
+        respawnPoint = transform.position;
     }
 
     // Update is called once per frame
@@ -56,7 +61,7 @@ public class PacStudentController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.D))
             lastInput = KeyCode.D;
 
-        if(!tweener.TweenExists(transform) && !inTeleporter)
+        if(!tweener.TweenExists(transform) && !inTeleporter && !isDead)
             MovePlayer();
         
         //Debug.Log("Last Input" + lastInput);
@@ -190,28 +195,66 @@ public class PacStudentController : MonoBehaviour
         }
     }
 
+    void Death()
+    {
+        isDead = true;
+        lastInput = KeyCode.None;
+        currentInput = KeyCode.None;
+        playerAnimator.SetBool("isDead", isDead);
+        statusManager.currentLife--;
+        GetComponent<BoxCollider>().enabled = false;
+        Invoke("Respawn", 3.0f);
+    }
+
+    void Respawn()
+    {
+        isDead = false;
+        transform.position = respawnPoint;
+        moveTargetPosition = transform.position;
+        GetComponent<BoxCollider>().enabled = true;
+        playerAnimator.SetBool("isDead", isDead);
+    }
+
+    // Collision handler
+
     void OnTriggerEnter(Collider collider)
     {
-        switch(collider.gameObject.tag)
+        if(!isDead)
         {
-            case "Pellet":
-                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
-                Destroy(collider.gameObject);
-                statusManager.currentScore += 10;
-            break;
+            switch(collider.gameObject.tag)
+            {
+                case "Pellet":
+                    playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
+                    Destroy(collider.gameObject);
+                    statusManager.currentScore += 10;
+                break;
 
-            case "BonusCherry":
-                playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
-                Destroy(collider.gameObject);
-                statusManager.currentScore += 100;
-            break;
+                case "BonusCherry":
+                    playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
+                    Destroy(collider.gameObject);
+                    statusManager.currentScore += 100;
+                break;
 
-            case "PowerUp":
-                // Change ghost animator to scared
-                ghosts.SetScared();
-                Destroy(collider.gameObject);
-            break;
+                case "PowerUp":
+                    // Change ghost animator to scared
+                    ghosts.SetScared();
+                    Destroy(collider.gameObject);
+                break;
+
+                case "Ghost":
+                    if(collider.gameObject.GetComponent<GhostController>().isScared)
+                    {
+                        // IF THE GHOST IS SCARED
+                    }
+                    else
+                    {
+                        // If the ghost is NOT scared
+                        Death();
+                    }
+                break;
+            }
         }
+        
         //Debug.Log("Triggered!");
     }
 
@@ -229,4 +272,5 @@ public class PacStudentController : MonoBehaviour
             }
         }
     }
+
 }

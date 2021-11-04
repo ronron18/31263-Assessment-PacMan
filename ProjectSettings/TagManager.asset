@@ -23,6 +23,7 @@ TagManager:
   - GhostScaredStatus
   - LifeIndicators
   - HUD
+  - Ghost
   layers:
   - Default
   - TransparentFX
