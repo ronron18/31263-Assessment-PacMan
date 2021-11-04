@@ -28,19 +28,34 @@ public class GhostController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach(Transform ghost in ghosts)
+        for(int i = 0; i < ghosts.Length; i++)
         {
-            if(spawnArea.Contains(ghost.position) && ghost.GetComponent<GhostStatusController>().isDead)
+            if(spawnArea.Contains(ghosts[i].position) && ghosts[i].GetComponent<GhostStatusController>().isDead)
             {
-                ghost.GetComponent<GhostStatusController>().Respawn();
+                ghosts[i].GetComponent<GhostStatusController>().Respawn();
             }
-            else if(spawnArea.Contains(ghost.position) && !ghost.GetComponent<GhostStatusController>().isDead)
+            else if(spawnArea.Contains(ghosts[i].position) && !ghosts[i].GetComponent<GhostStatusController>().isDead)
             {
-                GhostLeaveSpawn(ghosts[0]);
+                GhostLeaveSpawn(ghosts[i]);
             }
-            else if(!spawnArea.Contains(ghost.position) && !ghost.GetComponent<GhostStatusController>().isDead)
+            else if(!spawnArea.Contains(ghosts[i].position) && !ghosts[i].GetComponent<GhostStatusController>().isDead)
             {
-                GhostOneSelectTile(ghosts[0]);
+                switch(i)
+                {
+                    case 0:
+                        GhostOneSelectTile(ghosts[i]);
+                    break;
+
+                    case 1:
+                        GhostTwoSelectTile(ghosts[i]);
+                    break;
+                
+                    case 2:
+                    break;
+
+                    case 3:
+                    break;
+                }
             }
         }
     }
@@ -151,7 +166,7 @@ public class GhostController : MonoBehaviour
 
             for(int i = 0; i < directions.Length; i++)
             {
-                if(IsWalkable(ghost, directions[i], ghost.GetComponent<GhostStatusController>().previousPosition))
+                if(IsWalkable(ghost, directions[i], ghost.GetComponent<GhostStatusController>().previousPosition) && !spawnArea.Contains(ghost.position + directions[i]))
                 {
                     if(Vector3.Distance((ghost.position + directions[i]), player.position) > selectedDistance)
                     {
@@ -174,6 +189,44 @@ public class GhostController : MonoBehaviour
                 selectedDirection = ghost.GetComponent<GhostStatusController>().previousPosition - ghost.position;
             }
             Debug.Log("Ghost 1: " + ghost.GetComponent<GhostStatusController>().previousPosition);
+            MoveGhost(ghost, selectedDirection);
+        }
+    }
+
+    void GhostTwoSelectTile(Transform ghost)
+    {
+        if(!tweener.TweenExists(ghost))
+        {
+            Vector3[] directions = {Vector3.up, Vector3.down, Vector3.left, Vector3.right};
+            // Book keeping
+            Vector3 selectedDirection = Vector3.zero;
+            float selectedDistance = Mathf.Infinity;
+
+            for(int i = 0; i < directions.Length; i++)
+            {
+                if(IsWalkable(ghost, directions[i], ghost.GetComponent<GhostStatusController>().previousPosition) && !spawnArea.Contains(ghost.position + directions[i]))
+                {
+                    if(Vector3.Distance((ghost.position + directions[i]), player.position) < selectedDistance)
+                    {
+                        selectedDirection = directions[i];
+                        selectedDistance = Vector3.Distance((ghost.position + directions[i]), player.position);
+                    }
+                    else if(Vector3.Distance((ghost.position + directions[i]), player.position) == selectedDistance)
+                    {
+                        // decide to overwrite or not
+                        if(Random.value > 0.5)
+                        {
+                            selectedDirection = directions[i];
+                            selectedDistance = Vector3.Distance((ghost.position + directions[i]), player.position);
+                        }
+                    }
+                }
+            }
+            if(selectedDirection == Vector3.zero) // IF MUST BACKTRACK
+            {
+                selectedDirection = ghost.GetComponent<GhostStatusController>().previousPosition - ghost.position;
+            }
+            Debug.Log("Ghost 2: " + ghost.GetComponent<GhostStatusController>().previousPosition);
             MoveGhost(ghost, selectedDirection);
         }
     }
