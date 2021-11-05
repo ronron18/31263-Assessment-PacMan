@@ -19,7 +19,7 @@ public class PacStudentController : MonoBehaviour
     public AudioClip[] audioClips;
     private enum AudioClips
     {
-        walk, pellet, bump
+        walk, pellet, bump, death
     }
 
     [SerializeField] float movementSpeed;
@@ -52,14 +52,17 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
-            lastInput = KeyCode.W;
-        if(Input.GetKeyDown(KeyCode.A))
-            lastInput = KeyCode.A;
-        if(Input.GetKeyDown(KeyCode.S))
-            lastInput = KeyCode.S;
-        if(Input.GetKeyDown(KeyCode.D))
-            lastInput = KeyCode.D;
+        if(Time.timeScale != 0.0f)
+        {
+            if(Input.GetKeyDown(KeyCode.W))
+                lastInput = KeyCode.W;
+            if(Input.GetKeyDown(KeyCode.A))
+                lastInput = KeyCode.A;
+            if(Input.GetKeyDown(KeyCode.S))
+                lastInput = KeyCode.S;
+            if(Input.GetKeyDown(KeyCode.D))
+                lastInput = KeyCode.D;
+        }
 
         if(!tweener.TweenExists(transform) && !inTeleporter && !isDead)
             MovePlayer();
@@ -202,6 +205,7 @@ public class PacStudentController : MonoBehaviour
         lastInput = KeyCode.None;
         currentInput = KeyCode.None;
         playerAnimator.SetBool("isDead", isDead);
+        playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.death], 1.0f);
         statusManager.currentLife--;
         GetComponent<BoxCollider>().enabled = false;
         Invoke("Respawn", 3.0f);

@@ -19,7 +19,7 @@ public class InnovatedPacController : MonoBehaviour
     public AudioClip[] audioClips;
     private enum AudioClips
     {
-        walk, pellet, bump
+        walk, pellet, bump, death
     }
 
     [SerializeField] float movementSpeed;
@@ -52,22 +52,27 @@ public class InnovatedPacController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
-            lastInput = KeyCode.W;
-        if(Input.GetKeyDown(KeyCode.A))
-            lastInput = KeyCode.A;
-        if(Input.GetKeyDown(KeyCode.S))
-            lastInput = KeyCode.S;
-        if(Input.GetKeyDown(KeyCode.D))
-            lastInput = KeyCode.D;
+        if(Time.timeScale != 0.0f)
+        {
+            if(Input.GetKeyDown(KeyCode.W))
+                lastInput = KeyCode.W;
+            if(Input.GetKeyDown(KeyCode.A))
+                lastInput = KeyCode.A;
+            if(Input.GetKeyDown(KeyCode.S))
+                lastInput = KeyCode.S;
+            if(Input.GetKeyDown(KeyCode.D))
+                lastInput = KeyCode.D;
+        }
 
         if(!tweener.TweenExists(transform) && !inTeleporter && !isDead)
             MovePlayer();
         
-        if(statusManager.timeWithoutEating >= 4.0f && !isDead)
+        if(statusManager.timeWithoutEating >= 6.0f && !isDead)
         {
             Death();
         }
+
+        if(isDead) statusManager.timeWithoutEating = 0.0f;
         //Debug.Log("Last Input" + lastInput);
     }
 
@@ -205,6 +210,7 @@ public class InnovatedPacController : MonoBehaviour
         isDead = true;
         lastInput = KeyCode.None;
         currentInput = KeyCode.None;
+        playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.death], 1.0f);
         playerAnimator.SetBool("isDead", isDead);
         statusManager.currentLife--;
         GetComponent<BoxCollider>().enabled = false;
@@ -213,7 +219,7 @@ public class InnovatedPacController : MonoBehaviour
 
     void Respawn()
     {
-        statusManager.timeWithoutEating = 0.0f;
+        statusManager.timeWithoutEating = -2.0f;
         isDead = false;
         transform.position = respawnPoint;
         moveTargetPosition = transform.position;
@@ -232,14 +238,14 @@ public class InnovatedPacController : MonoBehaviour
                 case "Pellet":
                     playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.65f);
                     collider.gameObject.SetActive(false);
-                    statusManager.currentScore += 10;
+                    statusManager.currentScore += 15;
                     statusManager.timeWithoutEating = 0.0f;
                 break;
 
                 case "BonusCherry":
                     playerAudioSource.PlayOneShot(audioClips[(int)AudioClips.pellet], 0.8f);
                     collider.gameObject.SetActive(false);
-                    statusManager.currentScore += 100;
+                    statusManager.currentScore += 150;
                     statusManager.timeWithoutEating = 0.0f;
                 break;
 
@@ -255,7 +261,7 @@ public class InnovatedPacController : MonoBehaviour
                     {
                         // IF THE GHOST IS SCARED
                         collider.gameObject.GetComponent<GhostStatusController>().Death();
-                        statusManager.currentScore += 300;
+                        statusManager.currentScore += 450;
                         statusManager.timeWithoutEating = 0.0f;
                     }
                     else

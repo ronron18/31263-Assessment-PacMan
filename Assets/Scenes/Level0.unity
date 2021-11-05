@@ -15929,11 +15929,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff79a698f5b85b45bafa449bb1eb07e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  innovated: 0
   currentScore: 0
   currentTime: 0
   currentLife: 3
   gameOver: 0
   gameStarted: 0
+  timeWithoutEating: 0
 --- !u!114 &984299078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16339,6 +16341,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 19fe7da1d88ca9b44aa28c8777ca127e, type: 3}
   - {fileID: 8300000, guid: f0a2ac87d2eff0040ba02e25f9e558ce, type: 3}
   - {fileID: 8300000, guid: 67e798be691710344b8fade053572aa1, type: 3}
+  - {fileID: 8300000, guid: 4223661070bb4fa429e31705b551247d, type: 3}
   movementSpeed: 30
 --- !u!1001 &1040334007
 PrefabInstance:

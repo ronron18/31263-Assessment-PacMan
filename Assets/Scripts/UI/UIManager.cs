@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
 
         if(timeSinceLastEaten != null && statusManager != null)
         {
-            timeSinceLastEaten.fillAmount = Mathf.Clamp(statusManager.timeWithoutEating, 0.0f, 4.0f)/4.0f;
+            timeSinceLastEaten.fillAmount = Mathf.Clamp(statusManager.timeWithoutEating, 0.0f, 6.0f)/6.0f;
         }
     }
 
@@ -169,6 +169,7 @@ public class UIManager : MonoBehaviour
         countdown = GameObject.FindWithTag("Countdown").GetComponent<Text>();
         ghostScaredUIShown = false;
         statusManager = GameObject.FindWithTag("MainGameController").GetComponent<StatusManager>();
+        gameOverCalled = false;
         InitiateLifeIndicator();
         StartCoroutine(StartLevelCountdown());
     }
@@ -256,26 +257,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    /* 
-        basically LateOnSceneLoaded, This is used to destroy the old manager since we have a new one as a replacement when accessing the main menu.
-        Can't really think off a better solution :'(((
-    */
-    public void DoStuffAfterLevelIsLoaded(int level) {
-        switch(level) {
-            case (int)GameScenes.MainMenu:
-                Debug.Log("Main Menu Loaded2");
-                break;
-
-            case (int)GameScenes.LevelOne:
-                Debug.Log("First Level Loaded2");
-                break;
-
-            case (int)GameScenes.LevelTwo:
-                Debug.Log("Second Level Loaded2");
-                break;
-        }
-    }
-
     /*
         Coroutines
     */
@@ -296,7 +277,6 @@ public class UIManager : MonoBehaviour
             HideLoadingScreenInstant();
         else
             HideLoadingScreen();
-        DoStuffAfterLevelIsLoaded(level);
     }
 
     // Coroutine for start level countdown

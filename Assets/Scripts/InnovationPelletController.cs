@@ -16,6 +16,23 @@ public class InnovationPelletController : MonoBehaviour
         powerUps = GameObject.FindGameObjectsWithTag("PowerUp");
         Debug.Log(pellets.Length);
         Debug.Log(powerUps.Length);
+        for(int i = 0; i < (pellets.Length/2); i++)
+        {
+            bool added = false;
+            int randomNumber = Random.Range(0, pellets.Length);
+            while(!added)
+            {
+                if(pellets[randomNumber].activeSelf)
+                {
+                    added = true;
+                    pellets[randomNumber].SetActive(false);
+                }
+                else
+                {
+                    randomNumber = Random.Range(0, pellets.Length);
+                }
+            }
+        }
     }
 
     // Update is called once per frame

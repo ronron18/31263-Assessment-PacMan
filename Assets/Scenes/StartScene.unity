@@ -740,7 +740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -96}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 700, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &713044480
@@ -765,7 +765,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 70
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -776,7 +776,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: cute gameplay
+  m_Text: "cute gameplay: \nfunny bunny and moving boxes"
 --- !u!222 &713044481
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2009,6 +2009,7 @@ MonoBehaviour:
   ghostScaredUIShown: 0
   lifeIndicatorPrefab: {fileID: 8218762869612754429, guid: 444da6d7bd1ddee42801a04b7f13eb48, type: 3}
   countdown: {fileID: 0}
+  timeSinceLastEaten: {fileID: 0}
 --- !u!114 &1649219693
 MonoBehaviour:
   m_ObjectHideFlags: 0
