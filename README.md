@@ -3,11 +3,6 @@ Classic Game Recreation Assessment : Pac - man
 
 Made in Unity 2020.2.4f1
 
-Notes to self:
-- Directions in Player Animator: ranges from 0-3, start from facing upwards and go clockwise
-- Directions for ghost animators: ranges from 0-2, 0 = forwards, 1 = backwards, 2 = sideways
-- Added directions enum
-
-TO-DO:
-- move directions enum to some other class
-- rename main menu manager to ui manager
+A simple Pac-Man clone made in Unity. With an additional feature added for level 2.
+- Level 2 adds a "hunger" bar which decreases rapidly. Collect pellets to reset the bar. If the bar reaches 0 then you die.
+- Original visuals and musics. SFX are generated with BXFR.
